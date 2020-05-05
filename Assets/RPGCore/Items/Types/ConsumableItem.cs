@@ -1,4 +1,6 @@
-namespace RPGCore.Items
+using RPGCore.Items.Types.Templates;
+
+namespace RPGCore.Items.Types
 {
 	public class ConsumableItem : StackableItem
 	{

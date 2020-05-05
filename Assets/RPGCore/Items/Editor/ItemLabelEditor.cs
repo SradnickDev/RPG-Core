@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using RPGCore.Utilities;
+using UnityEditor;
 using UnityEngine;
 
 namespace RPGCore.Items.Editor
@@ -60,7 +61,7 @@ namespace RPGCore.Items.Editor
 
 					labelStyle.normal.textColor = Color.black;
 					labelStyle.fontSize = 9;
-					GUILayout.Label(m_itemTemplate.Name(), labelStyle);
+					GUILayout.Label(m_itemTemplate.ReadableType(), labelStyle);
 				}
 				GUILayout.EndVertical();
 			}

@@ -1,12 +1,19 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using RPGCore.Items.Types;
+using RPGCore.Items.Types.Templates;
 using UnityEngine;
 
 namespace RPGCore.Items
 {
+#region BsonSerilizazion
+
 	[BsonDiscriminator(RootClass = true)]
 	[BsonKnownTypes(typeof(ConsumableItemTemplate), typeof(ArmorItemTemplate),
 					typeof(WeaponItemTemplate), typeof(MiscItemTemplate))]
+
+#endregion
+
 	public abstract class ItemTemplate
 	{
 		public ObjectId Id;

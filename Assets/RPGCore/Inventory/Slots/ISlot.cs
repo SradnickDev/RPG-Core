@@ -1,7 +1,10 @@
-public interface ISlot<T>
+namespace RPGCore.Inventory.Slots
 {
-	void Add(T item);
-	bool HasItem();
-	bool IsEmpty(T item);
-	void Remove();
+	public interface ISlot<T>
+	{
+		void Add(T item);
+		bool HasItem();
+		bool IsEmpty(T item);
+		void Remove();
+	}
 }

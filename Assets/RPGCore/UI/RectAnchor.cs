@@ -1,7 +1,10 @@
-public enum RectAnchor
+namespace RPGCore.UI
 {
-	Top,
-	Bottom,
-	Left,
-	Right
+	public enum RectAnchor
+	{
+		Top,
+		Bottom,
+		Left,
+		Right
+	}
 }

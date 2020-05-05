@@ -16,10 +16,17 @@ namespace RPGCore.Items.Editor
 	public class ButtonAction : FieldAction
 	{
 		public readonly Action Action;
+		public readonly GUIContent GuiContent;
 
 		public ButtonAction(string name, Action action) : base(name)
 		{
 			Action = action;
+		}
+
+		public ButtonAction(string name, Texture icon, Action action) : base(name)
+		{
+			Action = action;
+			GuiContent = new GUIContent(name, icon);
 		}
 	}
 

@@ -1,6 +1,9 @@
-public interface IDragable
+namespace RPGCore.UI
 {
-	void OnBeginDrag(DragEventData eventData);
-	void OnDrag(DragEventData eventData);
-	void OnEndDrag(DragEventData eventData);
+	public interface IDragable
+	{
+		void OnBeginDrag(DragEventData eventData);
+		void OnDrag(DragEventData eventData);
+		void OnEndDrag(DragEventData eventData);
+	}
 }

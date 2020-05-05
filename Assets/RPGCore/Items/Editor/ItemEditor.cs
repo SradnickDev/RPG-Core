@@ -1,5 +1,6 @@
 ﻿using System;
 using RPGCore.Database.Item;
+using RPGCore.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,10 +13,18 @@ namespace RPGCore.Items.Editor
 		private ItemBodyEditor m_itemBodyEditor;
 		private bool m_loaded = false;
 
+		private const float DefaultWidth = 800f;
+		private const float DefaultHeight = 600f;
+
 		[MenuItem("RPGCore/Item Editor")]
 		public static void Open()
 		{
 			var editor = GetWindow<ItemEditor>();
+			editor.maximized = false;
+			editor.position = new Rect((Screen.width - DefaultWidth) / 2,
+									   (Screen.height - DefaultHeight) / 2, DefaultWidth,
+									   DefaultHeight);
+			
 			editor.titleContent = new GUIContent("Item Editor");
 			editor.Show();
 		}
@@ -40,7 +49,7 @@ namespace RPGCore.Items.Editor
 
 			m_loaded = true;
 		}
-
+		
 		public void LoadItems()
 		{
 			m_itemListEditor.Reset();
@@ -64,10 +73,10 @@ namespace RPGCore.Items.Editor
 			foreach (var type in GenericUtilities.FindAllDerivedTypes<ItemTemplate>())
 			{
 				var newItemTemplate = (ItemTemplate) Activator.CreateInstance(type);
-				context.AddItem(new GUIContent(newItemTemplate.Name()), false, () =>
+				context.AddItem(new GUIContent(newItemTemplate.ReadableType()), false, () =>
 				{
 					newItemTemplate.DisplayName =
-						$"new {newItemTemplate.Name()}{(m_itemListEditor.ItemCount + 1)}";
+						$"new {newItemTemplate.ReadableType()}{(m_itemListEditor.ItemCount + 1)}";
 					m_itemListEditor.Add(newItemTemplate);
 				});
 			}

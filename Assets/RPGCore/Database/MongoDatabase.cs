@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using RPGCore.Database.Mongo;
+using UnityEngine;
 
 namespace RPGCore.Database
 {
@@ -34,6 +36,11 @@ namespace RPGCore.Database
 		public IEnumerable<T> FetchAll()
 		{
 			return m_collection.Find(_ => true).ToEnumerable();
+		}
+
+		public  void FetchAllAsync(Action<float> progress, IEnumerable<T> result)
+		{
+		
 		}
 
 #endregion

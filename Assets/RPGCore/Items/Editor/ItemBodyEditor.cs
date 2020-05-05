@@ -1,3 +1,7 @@
+using System;
+using RPGCore.Items.Types.Templates;
+using RPGCore.Stat;
+using RPGCore.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,6 +12,8 @@ namespace RPGCore.Items.Editor
 		private ItemTemplate m_itemTemplate;
 		private EditorWindow m_editorWindow;
 		private bool m_draw = false;
+		private int m_currentTab = 0;
+		private string[] m_tabs = new[] {"Stats", "Behaviour", "Other"};
 
 		public void Set(ItemTemplate itemEditorLabel)
 		{
@@ -26,8 +32,7 @@ namespace RPGCore.Items.Editor
 		{
 			m_editorWindow = editorWindow;
 
-			GUILayout.BeginHorizontal(EditorStyles.helpBox
-									, GUILayout.ExpandWidth(true)
+			GUILayout.BeginHorizontal(GUILayout.ExpandWidth(true)
 									, GUILayout.ExpandHeight(true));
 
 			if (Event.current.type == EventType.Layout && m_itemTemplate != null)
@@ -66,7 +71,7 @@ namespace RPGCore.Items.Editor
 			labelStyle.normal.textColor = Color.grey;
 			labelStyle.fontSize = 9;
 
-			GUILayout.Label($"{m_itemTemplate.Name()}", labelStyle);
+			GUILayout.Label($"{m_itemTemplate.ReadableType()}", labelStyle);
 			GUILayout.Label("Item ID :" + m_itemTemplate.Id, labelStyle);
 			GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();
@@ -97,10 +102,80 @@ namespace RPGCore.Items.Editor
 
 		private void DrawItemOptions()
 		{
-			GUILayout.BeginVertical(EditorStyles.helpBox, GUILayout.ExpandHeight(true),
-									GUILayout.ExpandWidth(true));
+			m_currentTab = GUILayout.Toolbar(m_currentTab, m_tabs);
+			GUILayout.BeginVertical();
+
+			switch (m_currentTab)
+			{
+				case 0:
+					DrawStats();
+					break;
+				case 1:
+					DrawBehaviour();
+					break;
+				case 2:
+					DrawOther();
+					break;
+			}
 
 			GUILayout.EndVertical();
+		}
+
+		private void DrawStats()
+		{
+			GUILayout.Space(20);
+
+			GUILayout.BeginVertical();
+			StatCollection stats = null;
+			if (m_itemTemplate.GetType() == typeof(ArmorItemTemplate))
+			{
+				stats = ((ArmorItemTemplate) m_itemTemplate).Stats;
+			}
+
+			if (m_itemTemplate.GetType() == typeof(WeaponItemTemplate))
+			{
+				stats = ((WeaponItemTemplate) m_itemTemplate).Stats;
+			}
+
+			for (var i = 0; i < stats.Count; i++)
+			{
+				var stat = stats[i];
+				EditorExtension.DrawStat(stat, s => stats.Remove(s));
+			}
+
+			GUILayout.EndVertical();
+
+			GUILayout.FlexibleSpace();
+			GUILayout.BeginHorizontal(EditorStyles.toolbar,
+									  GUILayout.ExpandWidth(true),
+									  GUILayout.MaxHeight(22));
+
+
+			var addIcon = EditorGUIUtility.IconContent("Toolbar Plus More");
+			EditorExtension.ClassDropDown<BaseStat>(new GUIContent(addIcon)
+												  , t =>
+													{
+														t.BaseValue = 20;
+														stats?.Add(t);
+													}, EditorStyles.toolbarButton);
+
+			if (GUILayout.Button(EditorGUIUtility.IconContent("TreeEditor.Trash"),
+								 EditorStyles.toolbarButton))
+			{
+				stats.Clear();
+			}
+
+			GUILayout.EndHorizontal();
+		}
+
+		private void DrawBehaviour()
+		{
+			Debug.Log("be");
+		}
+
+		private void DrawOther()
+		{
+			Debug.Log("ot");
 		}
 
 		private void DrawEmptySelectionLabel()

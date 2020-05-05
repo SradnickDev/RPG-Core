@@ -14,9 +14,9 @@ namespace RPGCore.Items.Editor
 								 Action saveItems,
 								 Action createItem)
 		{
-			m_loadBtn = new ButtonAction("Load Items", loadItems);
-			m_saveBtn = new ButtonAction("Save Items", saveItems);
-			m_createBtn = new ButtonAction("Create Item", createItem);
+			m_loadBtn = new ButtonAction("Load Items",EditorGUIUtility.FindTexture( "Asset Store" ), loadItems);
+			m_saveBtn = new ButtonAction("Save Items",EditorGUIUtility.FindTexture("SaveActive"), saveItems);
+			m_createBtn = new ButtonAction("Create Item",EditorGUIUtility.FindTexture("Toolbar Plus More"), createItem);
 		}
 
 		public void Draw(EditorWindow editorWindow)
@@ -35,10 +35,22 @@ namespace RPGCore.Items.Editor
 				switch (btn)
 				{
 					case ButtonAction buttonAction:
-						if (GUILayout.Button(btn.Name, EditorStyles.toolbarButton,
-											 GUILayout.MaxWidth(88)))
+						if (buttonAction.GuiContent != null)
 						{
-							buttonAction.Action?.Invoke();
+							if (GUILayout.Button(buttonAction.GuiContent,
+												 EditorStyles.toolbarButton,
+												 GUILayout.MaxWidth(88)))
+							{
+								buttonAction.Action?.Invoke();
+							}
+						}
+						else
+						{
+							if (GUILayout.Button(btn.Name, EditorStyles.toolbarButton,
+												 GUILayout.MaxWidth(88)))
+							{
+								buttonAction.Action?.Invoke();
+							}
 						}
 
 						break;

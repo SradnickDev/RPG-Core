@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using RPGCore.Stat;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -260,7 +261,121 @@ namespace RPGCore.Items.Editor
 
 			EditorGUI.EndProperty();
 		}
+		
+		public static void DrawStat(BaseStat stat, Action<BaseStat> onRemove)
+		{
+			GUILayout.BeginHorizontal();
+			stat.BaseValue =  EditorExtension.DragProgressbar(stat.BaseValue
+															, stat.Min
+															, stat.Max
+															, Color.cyan
+															, new GUIContent(stat.GetType()
+																				 .Name
+																		   + " : ")
+															, GUILayout.ExpandWidth(true));
+			stat.BaseValue = Mathf.Round(stat.BaseValue * stat.RoundTo) / stat.RoundTo;
 
+			if (GUILayout.Button(EditorGUIUtility.IconContent("Toolbar Minus"),
+								 GUIStyle.none, GUILayout.ExpandWidth(false),
+								 GUILayout.ExpandHeight(true)))
+			{
+				onRemove(stat);
+			}
+
+			GUILayout.EndHorizontal();
+			GUILayout.Space(5);
+		}
+
+		public static float DragProgressbar(float current,
+											float min,
+											float max,
+											Color color,
+											GUIContent label,
+											params GUILayoutOption[] opts)
+		{
+			GUILayout.BeginHorizontal(new GUIStyle("Wizard Box"),opts);
+			GUILayout.Label(label, GUILayout.Width(150));
+			GUILayout.Label(min.ToString(), GUILayout.ExpandWidth(false));
+			var position = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, opts);
+			var retVal = DragProgressbar(position, current, min, max, color);
+			GUILayout.Label(max.ToString(), GUILayout.Width(30));
+			GUILayout.EndHorizontal();
+			return retVal;
+		}
+
+		private static float DragProgressbar(Rect controlRect,
+											 float current,
+											 float min,
+											 float max,
+											 Color color)
+		{
+			var controlID = GUIUtility.GetControlID(FocusType.Passive);
+			switch (Event.current.GetTypeForControl(controlID))
+			{
+				case EventType.Repaint:
+				{
+					var percentage = Mathf.InverseLerp(min, max, current);
+					var pixelWidth = (int) Mathf.Lerp(1f, controlRect.width, percentage);
+					controlRect.y += 1;
+					var barRect = new Rect(controlRect)
+					{
+						width = pixelWidth,
+						height = EditorGUIUtility.singleLineHeight-1
+					};
+
+					var backgroundRect = new Rect(controlRect)
+					{
+						height = EditorGUIUtility.singleLineHeight
+					};
+
+					var labelRect = new Rect(controlRect)
+					{
+						height = EditorGUIUtility.singleLineHeight
+					};
+
+					GUI.color = new Color(color.r*0.3f,color.g*0.3f,color.b*0.3f,color.a*0.3f);
+					
+					GUI.DrawTexture(backgroundRect, Texture2D.whiteTexture);
+					GUI.color = color;
+					GUI.DrawTexture(barRect, Texture2D.whiteTexture);
+					GUI.color = Color.black;
+					GUI.Label(labelRect, current.ToString(),EditorStyles.centeredGreyMiniLabel);
+					GUI.color = Color.white;
+					break;
+				}
+				case EventType.MouseDown:
+				{
+					if (controlRect.Contains(Event.current.mousePosition)
+					 && Event.current.button == 0)
+					{
+						GUIUtility.hotControl = controlID;
+					}
+
+					break;
+				}
+
+				case EventType.MouseUp:
+				{
+					if (GUIUtility.hotControl == controlID)
+					{
+						GUIUtility.hotControl = 0;
+					}
+
+					break;
+				}
+			}
+
+			if (Event.current.isMouse && GUIUtility.hotControl == controlID)
+			{
+				var relativeX = Event.current.mousePosition.x - controlRect.x;
+				var percentage = Mathf.Clamp01(relativeX / controlRect.width);
+				current = Mathf.Lerp(min, max, percentage);
+				GUI.changed = true;
+				Event.current.Use();
+			}
+
+			return current;
+		}
 	#endif
 	}
 }

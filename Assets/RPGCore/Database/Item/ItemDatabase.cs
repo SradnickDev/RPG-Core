@@ -49,6 +49,12 @@ namespace RPGCore.Database.Item {
 			var itemTemplates = m_mongoDatabase.FetchAll();
 			return itemTemplates;
 		}
+		
+		public static IEnumerable<ItemTemplate> FetchAllSync()
+		{
+			var itemTemplates = m_mongoDatabase.FetchAll();
+			return itemTemplates;
+		}
 
 		public static void Update(IEnumerable<ItemTemplate> items)
 		{

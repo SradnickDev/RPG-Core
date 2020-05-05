@@ -27,7 +27,7 @@ namespace RPGCore.Items.Editor
 		private bool m_isResizing = false;
 		private Rect m_changeRect;
 		private const float SplitWidth = 5;
-		private float m_horizontalSplitterPercent = 0.25f;
+		private float m_horizontalSplitterPercent = 0.15f;
 
 		private int MaxPages =>
 			Mathf.Max(Mathf.CeilToInt(m_items.Count / (float) m_maxItemsPerPage), 1);
@@ -262,7 +262,7 @@ namespace RPGCore.Items.Editor
 			if (m_isResizing)
 			{
 				m_horizontalSplitterPercent =
-					Mathf.Clamp(Event.current.mousePosition.x / m_window.position.width, 0.2f,
+					Mathf.Clamp(Event.current.mousePosition.x / m_window.position.width, 0.15f,
 								0.5f);
 				m_changeRect.x = (int) (m_window.position.width * m_horizontalSplitterPercent);
 				m_scrollViewWidth = m_changeRect.x;
