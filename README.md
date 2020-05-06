@@ -18,7 +18,7 @@ Asset Bundle Browser is also recommended.
 > Item management, drag n drop, stacking, preview
 > dragable windows
 
-![Inventory](./Images/inventory.gif)  
+![Inventory](./Images/Inventory.gif)  
 
 #### Item Editor
 > load & save via database
