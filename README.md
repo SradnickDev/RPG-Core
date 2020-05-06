@@ -1,6 +1,6 @@
 
 # RPG Core
-[![Unity Version: 2019.2.21f1](https://img.shields.io/badge/Unity-2019.2.21f1-333333.svg?logo=unity)](https://unity3d.com/get-unity/download/archive) [![Status: Work-in-progress](https://img.shields.io/badge/status-work--in--progress-orange)](https://github.com/Fydar/RPGCore/projects/1)
+[![Unity Version: 2019.2.21f1](https://img.shields.io/badge/Unity-2019.2.21f1-333333.svg?logo=unity)](https://unity3d.com/get-unity/download/archive) [![Status: Work-in-progress](https://img.shields.io/badge/status-work--in--progress-orange)](https://github.com/SradnickDev/RPG-Core)
 > Exploring different mechanics that are common in (mmo)rpg's.
 
  ## Technologies  
