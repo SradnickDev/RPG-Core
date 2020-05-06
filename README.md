@@ -15,21 +15,20 @@ Asset Bundle Browser is also recommended.
 ## Features
 
 #### Inventory
-> Item management, drag n drop, stacking, preview
-> dragable windows
+> Item management, drag n drop, stacking, preview  
+> dragable windows  
 
 ![Inventory](./Images/Inventory.gif)  
 
 #### Item Editor
-> load & save via database
-> create, update, delete items
+> load & save via database  
+> create, update, delete items  
 
 ![ItemEditor](./Images/ItemEditor.gif)
 
 #### Database
-> wrapper for a quick access
->
+> wrapper for a quick access  
 #### AssetBundle
-> wrapper for a simpler access
+> wrapper for a simpler access  
 > asset data-model to load asset when needed and simplify serialization/deserialization 
   
