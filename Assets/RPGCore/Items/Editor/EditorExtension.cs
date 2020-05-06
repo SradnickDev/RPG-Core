@@ -265,7 +265,7 @@ namespace RPGCore.Items.Editor
 		public static void DrawStat(BaseStat stat, Action<BaseStat> onRemove)
 		{
 			GUILayout.BeginHorizontal();
-			stat.BaseValue =  EditorExtension.DragProgressbar(stat.BaseValue
+			stat.BaseValue =  DragProgressbar(stat.BaseValue
 															, stat.Min
 															, stat.Max
 															, Color.cyan

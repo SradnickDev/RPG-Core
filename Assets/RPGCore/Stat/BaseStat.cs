@@ -4,11 +4,11 @@ using RPGCore.Stat.Types;
 
 namespace RPGCore.Stat
 {
-#region BsonSerilizazion
+#region BsonSerialization
 
 	[BsonDiscriminator(RootClass = true)]
 	[BsonKnownTypes(typeof(Health), typeof(Strength),
-					typeof(Mana), typeof(Intelligence),typeof(CritRate))]
+					typeof(Mana), typeof(Intelligence), typeof(CritRate))]
 
 #endregion
 
@@ -34,8 +34,13 @@ namespace RPGCore.Stat
 		private readonly List<Modifier> m_modifiers = new List<Modifier>();
 		private float m_cachedValue;
 
+		[BsonIgnore]
 		public virtual float Min { get; set; } = 0;
+
+		[BsonIgnore]
 		public virtual float Max { get; set; } = 100;
+
+		[BsonIgnore]
 		public virtual float RoundTo { get; set; } = 1f;
 
 		public BaseStat() { }
@@ -84,6 +89,7 @@ namespace RPGCore.Stat
 		}
 
 		public bool Equals(BaseStat x, BaseStat y) => x.GetHashCode() == y.GetHashCode();
+
 		public override bool Equals(object obj)
 		{
 			return Equals((BaseStat) obj, this);

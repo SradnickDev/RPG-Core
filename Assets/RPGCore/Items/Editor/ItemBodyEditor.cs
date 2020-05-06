@@ -1,4 +1,3 @@
-using System;
 using RPGCore.Items.Types.Templates;
 using RPGCore.Stat;
 using RPGCore.Utilities;
@@ -92,8 +91,8 @@ namespace RPGCore.Items.Editor
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("Icon", GUILayout.Width(146));
-			m_itemTemplate.Icon =
-				(Sprite) EditorGUILayout.ObjectField(m_itemTemplate.Icon, typeof(Sprite), false,
+			m_itemTemplate.Icon.Data =
+				(Sprite) EditorGUILayout.ObjectField(m_itemTemplate.Icon.Data, typeof(Sprite), false,
 													 GUILayout.Width(65), GUILayout.Height(65));
 			GUILayout.EndHorizontal();
 

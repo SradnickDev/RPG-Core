@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using MongoDB.Bson.Serialization;
-using UnityEngine;
 
 namespace RPGCore.Database.Mongo
 {
-	public sealed class UnityResolver : IBsonSerializationProvider
+	internal sealed class UnityResolver : IBsonSerializationProvider
 	{
 		public IBsonSerializer GetSerializer(Type type)
 		{
@@ -17,9 +16,8 @@ namespace RPGCore.Database.Mongo
 			private static readonly Dictionary<Type, IBsonSerializer> FormatterMap =
 				new Dictionary<Type, IBsonSerializer>()
 				{
-					{typeof(Sprite), new SpriteFormatter()},
-
-					//{typeof(AudioClip), new AudioClipFormatter()},
+					{typeof(SpriteModel), new SpriteModelFormatter()},
+					{typeof(AudioClipModel), new AudioClipModelFormatter()},
 				};
 
 			internal static IBsonSerializer GetFormatter(Type t)

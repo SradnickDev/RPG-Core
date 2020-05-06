@@ -1,4 +1,4 @@
-namespace RPGCore.Stat
+﻿namespace RPGCore.Stat
 {
 	public class Modifier
 	{

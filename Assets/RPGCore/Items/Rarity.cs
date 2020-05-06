@@ -1,4 +1,5 @@
-namespace RPGCore.Items {
+namespace RPGCore.Items
+{
 	public enum Rarity
 	{
 		Poor,

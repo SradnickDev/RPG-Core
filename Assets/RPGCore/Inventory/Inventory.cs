@@ -42,7 +42,7 @@ namespace RPGCore.Inventory
 			{
 				DisplayName = "Debug Misc Item",
 				Description = "Debug Misc Item",
-				Icon = m_debugSprite,
+				Icon = new SpriteModel(m_debugSprite),
 				Rarity = Rarity.Legendary,
 				Id = ObjectId.GenerateNewId(),
 			})
@@ -54,12 +54,15 @@ namespace RPGCore.Inventory
 
 			this[0, 0].Add(debugItem);
 			this[0, 1].Add(new MiscItem((MiscItemTemplate) debugItem.ItemTemplate));
-
+			this[0, 2].Add(debugItem);
+			this[0, 4].Add(debugItem);
+			this[0, 3].Add(debugItem);
 			this[0, 7].Add(new WeaponItem(new WeaponItemTemplate()
 			{
 				DisplayName = "Debug Weapon Item",
-				Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo ",
-				Icon = m_debugSprite,
+				Description =
+					"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo ",
+				Icon = new SpriteModel(m_debugSprite),
 				Rarity = Rarity.Uncommon,
 				Id = ObjectId.GenerateNewId(),
 				Stats = new StatCollection()
@@ -144,7 +147,7 @@ namespace RPGCore.Inventory
 		{
 			m_dragableIcon.transform.SetAsLastSibling();
 			m_dragableIcon.gameObject.SetActive(true);
-			m_dragableIcon.sprite = m_selectedItem.ItemTemplate.Icon;
+			m_dragableIcon.sprite = m_selectedItem.ItemTemplate.Icon.Data;
 			m_dragableIcon.transform.position = eventData.position;
 		}
 

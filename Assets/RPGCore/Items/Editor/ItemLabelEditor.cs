@@ -44,9 +44,9 @@ namespace RPGCore.Items.Editor
 									, GUILayout.MaxHeight(30)
 									, GUILayout.Height(30));
 			{
-				var icon = m_itemTemplate.Icon == null
+				var icon = m_itemTemplate.Icon.Data == null
 					? EditorGUIUtility.FindTexture("BuildSettings.Broadcom")
-					: m_itemTemplate.Icon.texture;
+					: m_itemTemplate.Icon.Data.texture;
 
 				GUILayout.Label(icon, GUILayout.Height(m_iconSize.x), GUILayout.Width(m_iconSize.y),
 								GUILayout.MaxHeight(30));

@@ -1,8 +1,6 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using RPGCore.Items.Types;
 using RPGCore.Items.Types.Templates;
-using UnityEngine;
 
 namespace RPGCore.Items
 {
@@ -19,7 +17,7 @@ namespace RPGCore.Items
 		public ObjectId Id;
 		public string DisplayName;
 		public string Description;
-		public Sprite Icon;
+		public SpriteModel Icon = new SpriteModel();
 		public Rarity Rarity = Rarity.Poor;
 
 		public ItemTemplate()

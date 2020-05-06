@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using RPGCore.Database.Item;
 using RPGCore.Utilities;
 using UnityEditor;
@@ -13,8 +15,8 @@ namespace RPGCore.Items.Editor
 		private ItemBodyEditor m_itemBodyEditor;
 		private bool m_loaded = false;
 
-		private const float DefaultWidth = 800f;
-		private const float DefaultHeight = 600f;
+		private const float DefaultWidth = 1200f;
+		private const float DefaultHeight = 800f;
 
 		[MenuItem("RPGCore/Item Editor")]
 		public static void Open()
@@ -24,7 +26,7 @@ namespace RPGCore.Items.Editor
 			editor.position = new Rect((Screen.width - DefaultWidth) / 2,
 									   (Screen.height - DefaultHeight) / 2, DefaultWidth,
 									   DefaultHeight);
-			
+
 			editor.titleContent = new GUIContent("Item Editor");
 			editor.Show();
 		}
@@ -49,12 +51,36 @@ namespace RPGCore.Items.Editor
 
 			m_loaded = true;
 		}
-		
+
 		public void LoadItems()
 		{
-			m_itemListEditor.Reset();
-			var result = ItemDatabase.FetchAll();
-			m_itemListEditor.Set(result);
+			var token = new CancellationTokenSource();
+
+			void DisplayProgress(int current, int max)
+			{
+				if (EditorUtility.DisplayCancelableProgressBar("Item Database",
+															   $"Loading Items : {current} / {max}",
+															   current / (float) max))
+				{
+					token.Cancel();
+					EditorUtility.ClearProgressBar();
+					token.Dispose();
+					return;
+				}
+
+				if (current / (float) max >= 0.9f)
+				{
+					EditorUtility.ClearProgressBar();
+				}
+			}
+
+			void OnCompleted(IEnumerable<ItemTemplate> result)
+			{
+				m_itemListEditor.Reset();
+				m_itemListEditor.Set(result);
+			}
+
+			ItemDatabase.FetchAllASync(DisplayProgress, OnCompleted, token.Token);
 		}
 
 		public void SaveItems()

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using RPGCore.Database.Mongo;
+using UnityEditor;
 using UnityEngine;
 
 namespace RPGCore.Database
@@ -35,12 +37,33 @@ namespace RPGCore.Database
 
 		public IEnumerable<T> FetchAll()
 		{
-			return m_collection.Find(_ => true).ToEnumerable();
+			return m_collection.Find(FilterDefinition<T>.Empty).ToEnumerable();
 		}
 
-		public  void FetchAllAsync(Action<float> progress, IEnumerable<T> result)
+		public async Task FetchAllASync(Action<int, int> progress,
+										Action<IEnumerable<T>> result,
+										CancellationToken token = default)
 		{
-		
+			var count =
+				await m_collection.CountDocumentsAsync(FilterDefinition<T>.Empty, null, token);
+			var cursor = await m_collection.FindAsync(FilterDefinition<T>.Empty, null, token);
+			var retVal = new List<T>();
+
+			token.ThrowIfCancellationRequested();
+
+			while (await cursor.MoveNextAsync())
+			{
+				token.ThrowIfCancellationRequested();
+				var entry = cursor.Current;
+				foreach (var e in entry)
+				{
+					token.ThrowIfCancellationRequested();
+					retVal.Add(e);
+					progress(retVal.Count, (int) count);
+				}
+			}
+
+			result(retVal);
 		}
 
 #endregion

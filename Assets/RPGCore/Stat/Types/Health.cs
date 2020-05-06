@@ -1,4 +1,4 @@
-namespace RPGCore.Stat.Types
+﻿namespace RPGCore.Stat.Types
 {
 	public class Health : BaseStat
 	{

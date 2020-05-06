@@ -9,7 +9,7 @@ namespace RPGCore.Inventory.Slots
 		{
 			Content = item;
 			var quantity = item is StackableItem stackableItem ? stackableItem.Quantity : 0;
-			Set(item.ItemTemplate.Icon, item.ItemTemplate.ItemColor(), quantity);
+			Set(item.ItemTemplate.Icon.Data, item.ItemTemplate.ItemColor(), quantity);
 		}
 
 		public override bool HasItem() => Content != null;

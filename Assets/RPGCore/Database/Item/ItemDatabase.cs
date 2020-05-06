@@ -1,11 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using RPGCore.Items;
 using UnityEngine;
 
-namespace RPGCore.Database.Item {
+namespace RPGCore.Database.Item
+{
 	public static class ItemDatabase
 	{
 		private static MongoDatabase<ItemTemplate> m_mongoDatabase;
@@ -49,11 +52,18 @@ namespace RPGCore.Database.Item {
 			var itemTemplates = m_mongoDatabase.FetchAll();
 			return itemTemplates;
 		}
-		
-		public static IEnumerable<ItemTemplate> FetchAllSync()
+
+		public static async void FetchAllASync(Action<int,int> progress, Action<IEnumerable<ItemTemplate>> result,CancellationToken token = default)
 		{
-			var itemTemplates = m_mongoDatabase.FetchAll();
-			return itemTemplates;
+			try
+			{
+				await m_mongoDatabase.FetchAllASync(progress, result, token);
+			}
+			catch (OperationCanceledException)
+			{
+				Debug.LogError("Fetching Items was cancelled.");
+			}
+			
 		}
 
 		public static void Update(IEnumerable<ItemTemplate> items)
