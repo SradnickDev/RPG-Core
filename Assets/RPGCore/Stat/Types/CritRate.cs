@@ -1,7 +1,8 @@
-﻿using RPGCore.Stat;
-
-public class CritRate : BaseStat
+﻿namespace RPGCore.Stat.Types
 {
-	public override float RoundTo { get; set; } = 100f;
-	public CritRate() { }
+	public class CritRate : BaseStat
+	{
+		public override float RoundTo { get; set; } = 100f;
+		public CritRate() { }
+	}
 }

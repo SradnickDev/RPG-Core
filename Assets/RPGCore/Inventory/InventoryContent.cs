@@ -6,6 +6,6 @@ namespace RPGCore.Inventory
 {
 	public class InventoryContent : MonoBehaviour
 	{
-		[SerializeField] private List<ItemTemplate> m_items = new List<ItemTemplate>();
+		[SerializeField] private List<ItemDefinition> m_items = new List<ItemDefinition>();
 	}
 }

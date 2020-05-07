@@ -6,29 +6,29 @@ namespace RPGCore.Items.Editor
 {
 	public class ItemLabelEditor : IEditorComponent
 	{
-		public string ItemName => m_itemTemplate.DisplayName;
-		public ItemTemplate ItemTemplate => m_itemTemplate;
+		public string ItemName => m_itemDefinition.DisplayName;
+		public ItemDefinition ItemDefinition => m_itemDefinition;
 
-		private ItemTemplate m_itemTemplate;
+		private ItemDefinition m_itemDefinition;
 		private Vector2 m_iconSize = new Vector2(30, 30);
 		private GUIStyle m_style;
 		private GUIStyle SelectedStyle => new GUIStyle("MeTransitionSelectHead");
 		private GUIStyle DeselectedStyle => new GUIStyle("PreferencesSectionBox");
 
-		public ItemLabelEditor(ItemTemplate itemTemplate)
+		public ItemLabelEditor(ItemDefinition itemDefinition)
 		{
-			m_itemTemplate = itemTemplate;
+			m_itemDefinition = itemDefinition;
 			m_style = DeselectedStyle;
 		}
 
-		public void Set(ItemTemplate itemTemplate)
+		public void Set(ItemDefinition itemDefinition)
 		{
-			m_itemTemplate = itemTemplate;
+			m_itemDefinition = itemDefinition;
 		}
 
 		public void Draw(EditorWindow window)
 		{
-			if (m_itemTemplate == null)
+			if (m_itemDefinition == null)
 			{
 				Debug.LogError("Item Editor entry, ItemTemplate is null!");
 				return;
@@ -44,9 +44,9 @@ namespace RPGCore.Items.Editor
 									, GUILayout.MaxHeight(30)
 									, GUILayout.Height(30));
 			{
-				var icon = m_itemTemplate.Icon.Data == null
+				var icon = m_itemDefinition.Icon.Data == null
 					? EditorGUIUtility.FindTexture("BuildSettings.Broadcom")
-					: m_itemTemplate.Icon.Data.texture;
+					: m_itemDefinition.Icon.Data.texture;
 
 				GUILayout.Label(icon, GUILayout.Height(m_iconSize.x), GUILayout.Width(m_iconSize.y),
 								GUILayout.MaxHeight(30));
@@ -55,13 +55,13 @@ namespace RPGCore.Items.Editor
 				{
 					var labelStyle = new GUIStyle(GUI.skin.label);
 					labelStyle.alignment = TextAnchor.MiddleLeft;
-					labelStyle.normal.textColor = m_itemTemplate.ItemColor();
+					labelStyle.normal.textColor = m_itemDefinition.ItemColor();
 					GUILayout.Label(ItemName, labelStyle);
 
 
 					labelStyle.normal.textColor = Color.black;
 					labelStyle.fontSize = 9;
-					GUILayout.Label(m_itemTemplate.ReadableType(), labelStyle);
+					GUILayout.Label(m_itemDefinition.ReadableType(), labelStyle);
 				}
 				GUILayout.EndVertical();
 			}

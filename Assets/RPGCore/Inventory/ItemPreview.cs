@@ -1,5 +1,4 @@
 ﻿using RPGCore.Inventory.Slots;
-using RPGCore.Items;
 using RPGCore.UI;
 using RPGCore.Utilities;
 using UnityEngine;
@@ -8,7 +7,6 @@ using UnityEngine.UI;
 #pragma warning disable 0649
 namespace RPGCore.Inventory
 {
-	[RequireComponent(typeof(GraphicRaycaster))]
 	public class ItemPreview : MonoBehaviour
 	{
 		[SerializeField] private GraphicRaycaster m_raycaster;
@@ -16,7 +14,7 @@ namespace RPGCore.Inventory
 		[SerializeField] private RectAnchor m_rectAnchor = RectAnchor.Left;
 		[SerializeField] private float m_offset = 5;
 
-		private ItemSlot m_currentTarget;
+		private BaseSlot m_currentTarget;
 		private bool m_enablePreview = true;
 		private GraphicHoverTrigger m_hoverTrigger;
 
@@ -31,9 +29,9 @@ namespace RPGCore.Inventory
 		{
 			if (!m_enablePreview) return;
 
-			if (ItemUtilities.TryGetTargetSlot(gbj, out m_currentTarget))
+			if (ItemUtilities.TryGetSlot(gbj, out m_currentTarget))
 			{
-				if (m_currentTarget.HasItem())
+				if (!m_currentTarget.IsEmpty)
 				{
 					var popUpPosition =
 						UiUtilities.AnchoredPosition((RectTransform) m_currentTarget.transform,

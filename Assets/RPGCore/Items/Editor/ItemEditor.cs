@@ -46,7 +46,7 @@ namespace RPGCore.Items.Editor
 
 			m_itemListEditor.SelectionChanged += label =>
 			{
-				m_itemBodyEditor.Set(label?.ItemTemplate);
+				m_itemBodyEditor.Set(label?.ItemDefinition);
 			};
 
 			m_loaded = true;
@@ -74,7 +74,7 @@ namespace RPGCore.Items.Editor
 				}
 			}
 
-			void OnCompleted(IEnumerable<ItemTemplate> result)
+			void OnCompleted(IEnumerable<ItemDefinition> result)
 			{
 				m_itemListEditor.Reset();
 				m_itemListEditor.Set(result);
@@ -96,9 +96,9 @@ namespace RPGCore.Items.Editor
 			var context = new GenericMenu();
 
 
-			foreach (var type in GenericUtilities.FindAllDerivedTypes<ItemTemplate>())
+			foreach (var type in GenericUtilities.FindAllDerivedTypes<ItemDefinition>())
 			{
-				var newItemTemplate = (ItemTemplate) Activator.CreateInstance(type);
+				var newItemTemplate = (ItemDefinition) Activator.CreateInstance(type);
 				context.AddItem(new GUIContent(newItemTemplate.ReadableType()), false, () =>
 				{
 					newItemTemplate.DisplayName =

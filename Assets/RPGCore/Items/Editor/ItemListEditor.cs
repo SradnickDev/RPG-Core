@@ -12,8 +12,8 @@ namespace RPGCore.Items.Editor
 	{
 		public event Action<ItemLabelEditor> SelectionChanged;
 
-		public IEnumerable<ItemTemplate> Items =>
-			m_items.Select(item => item.ItemTemplate).ToList();
+		public IEnumerable<ItemDefinition> Items =>
+			m_items.Select(item => item.ItemDefinition).ToList();
 
 		public int ItemCount => m_items.Count;
 		public ItemLabelEditor Selected;
@@ -73,12 +73,12 @@ namespace RPGCore.Items.Editor
 			m_window = window;
 		}
 
-		public void Add(ItemTemplate itemTemplate)
+		public void Add(ItemDefinition itemDefinition)
 		{
-			m_items.Add(new ItemLabelEditor(itemTemplate));
+			m_items.Add(new ItemLabelEditor(itemDefinition));
 		}
 
-		public void Set(IEnumerable<ItemTemplate> itemTemplate)
+		public void Set(IEnumerable<ItemDefinition> itemTemplate)
 		{
 			foreach (var template in itemTemplate)
 			{
@@ -194,18 +194,18 @@ namespace RPGCore.Items.Editor
 			GUI.FocusControl(null);
 			var targetLabel = itemLabelEditor;
 
-			void Save() => ItemDatabase.Update(targetLabel.ItemTemplate);
+			void Save() => ItemDatabase.Update(targetLabel.ItemDefinition);
 
 			void Reset()
 			{
-				var origin = ItemDatabase.Fetch(targetLabel.ItemTemplate.Id);
+				var origin = ItemDatabase.Fetch(targetLabel.ItemDefinition.Id);
 				targetLabel.Set(origin);
 				SelectionChanged?.Invoke(targetLabel);
 			}
 
 			void Delete()
 			{
-				ItemDatabase.DeleteById(targetLabel.ItemTemplate.Id);
+				ItemDatabase.DeleteById(targetLabel.ItemDefinition.Id);
 				m_items.Remove(targetLabel);
 				SelectionChanged?.Invoke(null);
 			}
@@ -213,8 +213,8 @@ namespace RPGCore.Items.Editor
 			void Duplicate()
 			{
 				var copy =
-					(ItemTemplate) Activator.CreateInstance(targetLabel.ItemTemplate.GetType(),
-															targetLabel.ItemTemplate);
+					(ItemDefinition) Activator.CreateInstance(targetLabel.ItemDefinition.GetType(),
+															targetLabel.ItemDefinition);
 				copy.Id = ObjectId.GenerateNewId();
 				copy.DisplayName = "copy_" + copy.DisplayName;
 				var newLabel = new ItemLabelEditor(copy);

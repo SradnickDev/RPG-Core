@@ -1,4 +1,3 @@
-using RPGCore.Items.Types.Templates;
 using RPGCore.Stat;
 
 namespace RPGCore.Items.Types
@@ -7,14 +6,14 @@ namespace RPGCore.Items.Types
 	{
 		public StatCollection Stats;
 
-		public WeaponItem(WeaponItemTemplate itemTemplate)
+		public WeaponItem(WeaponDefinition definition)
 		{
-			ItemTemplate = new WeaponItemTemplate(itemTemplate);
+			Definition = new WeaponDefinition(definition);
 		}
 
 		public override IItem Duplicate()
 		{
-			return new WeaponItem((WeaponItemTemplate) ItemTemplate);
+			return new WeaponItem((WeaponDefinition) Definition);
 		}
 	}
 }

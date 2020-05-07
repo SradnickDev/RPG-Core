@@ -2,7 +2,7 @@
 {
 	public interface IItem
 	{
-		ItemTemplate ItemTemplate { get; set; }
+		ItemDefinition Definition { get; set; }
 
 		IItem Duplicate();
 	}

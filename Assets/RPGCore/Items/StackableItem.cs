@@ -7,7 +7,7 @@ namespace RPGCore.Items
 		public int MaxQuantity = 10;
 		//TODO uncomment private from setter
 		public int Quantity { get; /*private*/ set; } = 1;
-		public ItemTemplate ItemTemplate { get; set; }
+		public ItemDefinition Definition { get; set; }
 		
 		public abstract IItem Duplicate();
 

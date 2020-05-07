@@ -1,4 +1,4 @@
-using RPGCore.Items.Types.Templates;
+using RPGCore.Items.Types;
 using RPGCore.Stat;
 using RPGCore.Utilities;
 using UnityEditor;
@@ -8,21 +8,21 @@ namespace RPGCore.Items.Editor
 {
 	internal class ItemBodyEditor : IEditorComponent
 	{
-		private ItemTemplate m_itemTemplate;
+		private ItemDefinition m_itemDefinition;
 		private EditorWindow m_editorWindow;
 		private bool m_draw = false;
 		private int m_currentTab = 0;
 		private string[] m_tabs = new[] {"Stats", "Behaviour", "Other"};
 
-		public void Set(ItemTemplate itemEditorLabel)
+		public void Set(ItemDefinition itemEditorLabel)
 		{
 			if (itemEditorLabel == null)
 			{
 				m_draw = false;
-				m_itemTemplate = null;
+				m_itemDefinition = null;
 			}
 
-			m_itemTemplate = itemEditorLabel;
+			m_itemDefinition = itemEditorLabel;
 			EditorGUI.FocusTextInControl("");
 			m_editorWindow.Repaint();
 		}
@@ -34,7 +34,7 @@ namespace RPGCore.Items.Editor
 			GUILayout.BeginHorizontal(GUILayout.ExpandWidth(true)
 									, GUILayout.ExpandHeight(true));
 
-			if (Event.current.type == EventType.Layout && m_itemTemplate != null)
+			if (Event.current.type == EventType.Layout && m_itemDefinition != null)
 			{
 				m_draw = true;
 			}
@@ -70,29 +70,29 @@ namespace RPGCore.Items.Editor
 			labelStyle.normal.textColor = Color.grey;
 			labelStyle.fontSize = 9;
 
-			GUILayout.Label($"{m_itemTemplate.ReadableType()}", labelStyle);
-			GUILayout.Label("Item ID :" + m_itemTemplate.Id, labelStyle);
+			GUILayout.Label($"{m_itemDefinition.ReadableType()}", labelStyle);
+			GUILayout.Label("Item ID :" + m_itemDefinition.Id, labelStyle);
 			GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();
 
 			GUILayout.Label("Item Info", EditorStyles.boldLabel);
-			m_itemTemplate.DisplayName =
-				EditorGUILayout.TextField("Display Name", m_itemTemplate.DisplayName);
+			m_itemDefinition.DisplayName =
+				EditorGUILayout.TextField("Display Name", m_itemDefinition.DisplayName);
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("Description", GUILayout.Width(146));
-			m_itemTemplate.Description =
-				EditorGUILayout.TextArea(m_itemTemplate.Description, GUILayout.MaxWidth(450));
+			m_itemDefinition.Description =
+				EditorGUILayout.TextArea(m_itemDefinition.Description, GUILayout.MaxWidth(450));
 
 			GUILayout.EndHorizontal();
 
-			m_itemTemplate.Rarity =
-				(Rarity) EditorGUILayout.EnumPopup("Rarity ", m_itemTemplate.Rarity);
+			m_itemDefinition.Rarity =
+				(Rarity) EditorGUILayout.EnumPopup("Rarity ", m_itemDefinition.Rarity);
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("Icon", GUILayout.Width(146));
-			m_itemTemplate.Icon.Data =
-				(Sprite) EditorGUILayout.ObjectField(m_itemTemplate.Icon.Data, typeof(Sprite), false,
+			m_itemDefinition.Icon.Data =
+				(Sprite) EditorGUILayout.ObjectField(m_itemDefinition.Icon.Data, typeof(Sprite), false,
 													 GUILayout.Width(65), GUILayout.Height(65));
 			GUILayout.EndHorizontal();
 
@@ -126,14 +126,14 @@ namespace RPGCore.Items.Editor
 
 			GUILayout.BeginVertical();
 			StatCollection stats = null;
-			if (m_itemTemplate.GetType() == typeof(ArmorItemTemplate))
+			if (m_itemDefinition.GetType() == typeof(ArmorDefinition))
 			{
-				stats = ((ArmorItemTemplate) m_itemTemplate).Stats;
+				stats = ((ArmorDefinition) m_itemDefinition).Stats;
 			}
 
-			if (m_itemTemplate.GetType() == typeof(WeaponItemTemplate))
+			if (m_itemDefinition.GetType() == typeof(WeaponDefinition))
 			{
-				stats = ((WeaponItemTemplate) m_itemTemplate).Stats;
+				stats = ((WeaponDefinition) m_itemDefinition).Stats;
 			}
 
 			for (var i = 0; i < stats.Count; i++)

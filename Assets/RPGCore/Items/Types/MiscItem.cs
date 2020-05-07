@@ -1,17 +1,15 @@
-using RPGCore.Items.Types.Templates;
-
 namespace RPGCore.Items.Types
 {
 	public class MiscItem : StackableItem
 	{
 		public override IItem Duplicate()
 		{
-			return new MiscItem((MiscItemTemplate) ItemTemplate);
+			return new MiscItem((MiscItemDefinition) Definition);
 		}
 
-		public MiscItem(MiscItemTemplate itemTemplate)
+		public MiscItem(MiscItemDefinition itemDefinition)
 		{
-			ItemTemplate = new MiscItemTemplate(itemTemplate);
+			Definition = new MiscItemDefinition(itemDefinition);
 		}
 	}
 }

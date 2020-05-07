@@ -1,16 +1,19 @@
-﻿using TMPro;
+﻿using RPGCore.Items;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 #pragma warning disable 0649
 namespace RPGCore.Inventory.Slots
 {
-	public abstract class BaseSlot<T> : MonoBehaviour, ISlot<T>
+	public abstract class BaseSlot : MonoBehaviour
 	{
+		public virtual bool IsEmpty => Content == null;
+
 		[SerializeField] private Image m_icon;
 		[SerializeField] private Image m_border;
 		[SerializeField] private TextMeshProUGUI m_quantityLabel;
-		public T Content;
+		public IItem Content;
 
 		public void Set(Sprite icon, Color borderColor, int quantity)
 		{
@@ -21,6 +24,7 @@ namespace RPGCore.Inventory.Slots
 		}
 
 		public abstract void Refresh();
+
 		public void Clear()
 		{
 			m_icon.sprite = null;
@@ -29,13 +33,11 @@ namespace RPGCore.Inventory.Slots
 			m_quantityLabel.text = "";
 		}
 
-		public abstract void Add(T item);
-
-		public abstract bool HasItem();
-
-		public abstract bool IsEmpty(T item);
+		public abstract void Add(IItem item);
 
 		public abstract void Remove();
+
+		public abstract bool CanDropItem(IItem selectedItem);
 	}
 }
 #pragma warning restore 0649

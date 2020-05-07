@@ -1,7 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+#pragma warning disable 0649
 namespace RPGCore.UI
 {
 	public class DragWindow : MonoBehaviour, IDragable
@@ -61,7 +61,7 @@ namespace RPGCore.UI
 
 		public void OnDrag(DragEventData eventData)
 		{
-			m_previousPosition = RectTransform.position - eventData.Delta;
+			m_previousPosition = RectTransform.position;
 			RectTransform.position += eventData.Delta;
 			KeepInScreen();
 		}
@@ -101,3 +101,4 @@ namespace RPGCore.UI
 		}
 	}
 }
+#pragma warning restore 0649

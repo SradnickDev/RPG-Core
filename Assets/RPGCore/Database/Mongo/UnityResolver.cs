@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MongoDB.Bson.Serialization;
+using RPGCore.Database.Item;
 
 namespace RPGCore.Database.Mongo
 {

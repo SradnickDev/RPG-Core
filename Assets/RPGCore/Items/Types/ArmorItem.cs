@@ -1,17 +1,15 @@
-using RPGCore.Items.Types.Templates;
-
 namespace RPGCore.Items.Types
 {
 	public class ArmorItem : UniqueItem
 	{
-		public ArmorItem(ArmorItemTemplate itemTemplate)
+		public ArmorItem(ArmorDefinition definition)
 		{
-			ItemTemplate = new ArmorItemTemplate(itemTemplate);
+			Definition = new ArmorDefinition(definition);
 		}
 
 		public override IItem Duplicate()
 		{
-			return new ArmorItem((ArmorItemTemplate) ItemTemplate);
+			return new ArmorItem((ArmorDefinition) Definition);
 		}
 	}
 }

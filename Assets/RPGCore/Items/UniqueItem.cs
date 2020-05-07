@@ -2,7 +2,7 @@ namespace RPGCore.Items
 {
 	public abstract class UniqueItem : IItem
 	{
-		public ItemTemplate ItemTemplate { get; set; }
+		public ItemDefinition Definition { get; set; }
 
 		public abstract IItem Duplicate();
 	}

@@ -9,14 +9,15 @@ namespace RPGCore.Utilities
 	{
 		public static bool IsStackable(this IItem item) => item is StackableItem;
 
-		public static bool IsStackableWith(this ItemSlot slot, IItem item)
+		public static bool IsStackableWith(this BaseSlot slot, IItem item)
 		{
+			if (!IsStackable(item)) return false;
+
 			var slotItem = slot.Content;
-			var isSameItem = item.ItemTemplate.Id == slotItem.ItemTemplate.Id;
-			return slotItem is StackableItem && isSameItem;
+			return item.Definition.Id == slotItem.Definition.Id;
 		}
 
-		public static bool TryStackItem(this ItemSlot slot, IItem item)
+		public static bool TryStackItem(this BaseSlot slot, IItem item)
 		{
 			var targetItem = ((StackableItem) slot.Content);
 			var originItem = ((StackableItem) item);
@@ -31,9 +32,9 @@ namespace RPGCore.Utilities
 			return false;
 		}
 
-		public static Color ItemColor(this ItemTemplate template)
+		public static Color ItemColor(this ItemDefinition definition)
 		{
-			switch (template.Rarity)
+			switch (definition.Rarity)
 			{
 				case Rarity.Poor:
 					return new Color(0.62f, 0.62f, 0.62f);
@@ -52,15 +53,15 @@ namespace RPGCore.Utilities
 			}
 		}
 
-		public static string ReadableType(this ItemTemplate template)
+		public static string ReadableType(this ItemDefinition definition)
 		{
-			var itemType = template.GetType().Name;
-			return itemType.Remove(itemType.Length - "ItemTemplate".Length, "ItemTemplate".Length);
+			var itemType = definition.GetType().Name;
+			return itemType.Remove(itemType.Length - "Definition".Length, "Definition".Length);
 		}
 
-		public static bool TryGetTargetSlot(GameObject gbj, out ItemSlot targetSlot)
+		public static bool TryGetSlot(GameObject gbj, out BaseSlot targetSlot)
 		{
-			targetSlot = gbj != null ? gbj.GetComponent<ItemSlot>() : null;
+			targetSlot = gbj != null ? gbj.GetComponent<BaseSlot>() : null;
 			return targetSlot != null;
 		}
 	}

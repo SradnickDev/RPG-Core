@@ -11,49 +11,49 @@ namespace RPGCore.Database.Item
 {
 	public static class ItemDatabase
 	{
-		private static MongoDatabase<ItemTemplate> m_mongoDatabase;
+		private static MongoDatabase<ItemDefinition> m_mongoDatabase;
 		private static string m_connectionInfoPath = Application.dataPath + "/connectionInfo.json";
 
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		public static void Initialize()
 		{
-			m_mongoDatabase = new MongoDatabase<ItemTemplate>();
+			m_mongoDatabase = new MongoDatabase<ItemDefinition>();
 			var connectionInfo = DatabaseUtility.Load(m_connectionInfoPath);
 			m_mongoDatabase.Connect(connectionInfo);
 		}
 
-		public static void InsertItem(ItemTemplate itemTemplate)
+		public static void InsertItem(ItemDefinition itemDefinition)
 		{
-			m_mongoDatabase.Insert(itemTemplate);
+			m_mongoDatabase.Insert(itemDefinition);
 		}
 
-		public static ItemTemplate Fetch(string name)
+		public static ItemDefinition Fetch(string name)
 		{
-			var filter = Builders<ItemTemplate>
+			var filter = Builders<ItemDefinition>
 						 .Filter
-						 .Eq(nameof(ItemTemplate.DisplayName), name);
+						 .Eq(nameof(ItemDefinition.DisplayName), name);
 
 			var itemTemplates = m_mongoDatabase.Fetch(filter);
 			return itemTemplates;
 		}
 
-		public static ItemTemplate Fetch(ObjectId id)
+		public static ItemDefinition Fetch(ObjectId id)
 		{
-			var filter = Builders<ItemTemplate>
+			var filter = Builders<ItemDefinition>
 						 .Filter
-						 .Eq(nameof(ItemTemplate.Id), id);
+						 .Eq(nameof(ItemDefinition.Id), id);
 
 			var itemTemplates = m_mongoDatabase.Fetch(filter);
 			return itemTemplates;
 		}
 
-		public static IEnumerable<ItemTemplate> FetchAll()
+		public static IEnumerable<ItemDefinition> FetchAll()
 		{
 			var itemTemplates = m_mongoDatabase.FetchAll();
 			return itemTemplates;
 		}
 
-		public static async void FetchAllASync(Action<int,int> progress, Action<IEnumerable<ItemTemplate>> result,CancellationToken token = default)
+		public static async void FetchAllASync(Action<int,int> progress, Action<IEnumerable<ItemDefinition>> result,CancellationToken token = default)
 		{
 			try
 			{
@@ -66,25 +66,25 @@ namespace RPGCore.Database.Item
 			
 		}
 
-		public static void Update(IEnumerable<ItemTemplate> items)
+		public static void Update(IEnumerable<ItemDefinition> items)
 		{
 			var models = items.Select(Selector);
 			m_mongoDatabase.Update(models);
 		}
 
-		public static void Update(ItemTemplate item)
+		public static void Update(ItemDefinition item)
 		{
-			var filter = Builders<ItemTemplate>
+			var filter = Builders<ItemDefinition>
 						 .Filter
-						 .Eq(nameof(ItemTemplate.Id), item.Id);
+						 .Eq(nameof(ItemDefinition.Id), item.Id);
 
 			m_mongoDatabase.Update(item, filter, true);
 		}
 
-		private static ReplaceOneModel<ItemTemplate> Selector(ItemTemplate item)
+		private static ReplaceOneModel<ItemDefinition> Selector(ItemDefinition item)
 		{
 			return new
-				ReplaceOneModel<ItemTemplate>(new ExpressionFilterDefinition<ItemTemplate>(doc => doc.Id == item.Id),
+				ReplaceOneModel<ItemDefinition>(new ExpressionFilterDefinition<ItemDefinition>(doc => doc.Id == item.Id),
 											  item)
 				{
 					IsUpsert = true
@@ -93,9 +93,9 @@ namespace RPGCore.Database.Item
 
 		public static void DeleteById(ObjectId id)
 		{
-			var filter = Builders<ItemTemplate>
+			var filter = Builders<ItemDefinition>
 						 .Filter
-						 .Eq(nameof(ItemTemplate.Id), id);
+						 .Eq(nameof(ItemDefinition.Id), id);
 			m_mongoDatabase.Delete(filter);
 		}
 	}

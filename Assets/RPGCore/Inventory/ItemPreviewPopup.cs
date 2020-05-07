@@ -1,6 +1,6 @@
 using RPGCore.Inventory.Slots;
 using RPGCore.Items;
-using RPGCore.Items.Types.Templates;
+using RPGCore.Items.Types;
 using RPGCore.Stat;
 using RPGCore.Utilities;
 using TMPro;
@@ -28,43 +28,43 @@ namespace RPGCore.Inventory
 		[SerializeField] private TextMeshProUGUI m_headerLabel;
 		[SerializeField] private TextMeshProUGUI m_contentLabel;
 
-		public void Show(ItemSlot slot, Vector2 position)
+		public void Show(BaseSlot slot, Vector2 position)
 		{
 			gameObject.SetActive(true);
 
-			var itemTemplate = slot.Content.ItemTemplate;
+			var itemTemplate = slot.Content.Definition;
 			RectTransform.position = position;
 
 			UpdateItemInfos(itemTemplate);
 		}
 
-		private void UpdateItemInfos(ItemTemplate itemTemplate)
+		private void UpdateItemInfos(ItemDefinition itemDefinition)
 		{
-			SetDefaultInfo(itemTemplate);
-			SetStats(itemTemplate);
-			SetDescription(itemTemplate);
+			SetDefaultInfo(itemDefinition);
+			SetStats(itemDefinition);
+			SetDescription(itemDefinition);
 		}
 
-		private void SetDefaultInfo(ItemTemplate itemTemplate)
+		private void SetDefaultInfo(ItemDefinition itemDefinition)
 		{
-			m_headerLabel.text = itemTemplate.DisplayName;
-			m_headerLabel.color = itemTemplate.ItemColor();
-			m_contentLabel.text = $"{itemTemplate.ReadableType()} - {itemTemplate.Rarity}";
+			m_headerLabel.text = itemDefinition.DisplayName;
+			m_headerLabel.color = itemDefinition.ItemColor();
+			m_contentLabel.text = $"{itemDefinition.ReadableType()} - {itemDefinition.Rarity}";
 			m_contentLabel.text += "\n";
 		}
 
-		private void SetStats(ItemTemplate itemTemplate)
+		private void SetStats(ItemDefinition itemDefinition)
 		{
 			StatCollection stats = null;
 
-			if (itemTemplate.GetType() == typeof(WeaponItemTemplate))
+			if (itemDefinition.GetType() == typeof(WeaponDefinition))
 			{
-				stats = ((WeaponItemTemplate) itemTemplate).Stats;
+				stats = ((WeaponDefinition) itemDefinition).Stats;
 			}
 
-			if (itemTemplate.GetType() == typeof(ArmorItemTemplate))
+			if (itemDefinition.GetType() == typeof(ArmorDefinition))
 			{
-				stats = ((ArmorItemTemplate) itemTemplate).Stats;
+				stats = ((ArmorDefinition) itemDefinition).Stats;
 			}
 
 			if (stats != null)
@@ -78,9 +78,9 @@ namespace RPGCore.Inventory
 			}
 		}
 
-		private void SetDescription(ItemTemplate itemTemplate)
+		private void SetDescription(ItemDefinition itemDefinition)
 		{
-			m_contentLabel.text += itemTemplate.Description;
+			m_contentLabel.text += itemDefinition.Description;
 		}
 
 		public void Hide()
