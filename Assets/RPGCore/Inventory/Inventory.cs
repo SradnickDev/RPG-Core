@@ -92,9 +92,9 @@ namespace RPGCore.Inventory
 		private void OnDrop(PointerEventData eventData)
 		{
 			if (m_selectedItem == null || m_selectedSlot == null) return;
-			
+
 			DropItem?.Invoke();
-			
+
 			if (ItemUtilities.TryGetSlot(eventData.pointerEnter, out var targetSlot))
 			{
 				if (targetSlot.IsEmpty && targetSlot.CanDropItem(m_selectedItem))
