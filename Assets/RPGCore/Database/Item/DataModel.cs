@@ -87,7 +87,7 @@ namespace RPGCore.Database.Item
 				Resources.UnloadUnusedAssets();
 				return true;
 			}
-			
+
 			return false;
 		}
 	}
