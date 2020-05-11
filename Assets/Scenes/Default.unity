@@ -558,13 +558,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58fdd04fe251884c9ecdff5f1533fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDrag:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1981960621}
+        m_MethodName: DisablePreview
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1981960621}
+        m_MethodName: EnablePreview
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_dragWindows:
   - {fileID: 7367299561612932943}
   - {fileID: 1623963194}
   - {fileID: 1808064075}
+  - {fileID: 2029764541}
+  m_detectCollision: 0
 --- !u!114 &1808064075 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7735691838634452525, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
+    type: 3}
+  m_PrefabInstance: {fileID: 8070200864031047120}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa6e637de9fcfa94f96b2224348cfa24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1981960621 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8498126683537378886, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
+    type: 3}
+  m_PrefabInstance: {fileID: 8070200864031047120}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfb0e886495a6af44a83c295057db904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2029764541 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5567357201438654074, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
     type: 3}
   m_PrefabInstance: {fileID: 8070200864031047120}
   m_PrefabAsset: {fileID: 0}
@@ -779,11 +833,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1175665193359208211, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
-        type: 3}
-      propertyPath: m_Name
-      value: ArmorSlot_Hands
-      objectReference: {fileID: 0}
     - target: {fileID: 1273810424411706444, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -904,16 +953,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1456728500612397388, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
-        type: 3}
-      propertyPath: m_Name
-      value: ArmorSlot_Neck
-      objectReference: {fileID: 0}
-    - target: {fileID: 2028512375780738805, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
-        type: 3}
-      propertyPath: m_Name
-      value: ArmorSlot_Feet
-      objectReference: {fileID: 0}
     - target: {fileID: 2138833236696681827, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -943,11 +982,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2199823320618428396, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
-        type: 3}
-      propertyPath: m_Name
-      value: ArmorSlot_Back
       objectReference: {fileID: 0}
     - target: {fileID: 2362603447506757081, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
         type: 3}
@@ -1119,11 +1153,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3778515521406350317, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponSlot_OffHand
-      objectReference: {fileID: 0}
     - target: {fileID: 3808110899748953736, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1304,11 +1333,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4631944592574939005, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
-        type: 3}
-      propertyPath: m_Name
-      value: ArmorSlot_Shoulder
-      objectReference: {fileID: 0}
     - target: {fileID: 5112782652815910061, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1459,16 +1483,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6285721370646120943, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
-        type: 3}
-      propertyPath: m_Name
-      value: ArmorSlot_Head
-      objectReference: {fileID: 0}
-    - target: {fileID: 6308912555127276829, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
-        type: 3}
-      propertyPath: m_Name
-      value: ArmorSlot_Chest
-      objectReference: {fileID: 0}
     - target: {fileID: 6391530870470946823, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1528,11 +1542,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6783396779953225515, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
-        type: 3}
-      propertyPath: m_Name
-      value: ArmorSlot_Legs
       objectReference: {fileID: 0}
     - target: {fileID: 7055021470648869964, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
         type: 3}
@@ -1653,11 +1662,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7676673410300757181, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponSlot_MainHand
       objectReference: {fileID: 0}
     - target: {fileID: 7919136128630040522, guid: 15e35d1d697cdf04bbdf06478c7bfb9e,
         type: 3}

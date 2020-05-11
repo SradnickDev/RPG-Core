@@ -9,7 +9,8 @@ namespace RPGCore.Inventory.Slots
 {
 	public class ArmorSlot : BaseSlot
 	{
-		[SerializeField] private ArmorType m_slotType;
+		public ArmorType ArmorType => m_armorType;
+		[SerializeField] private ArmorType m_armorType;
 		[SerializeField] private Image m_typeIcon;
 		public override void Refresh() => Add(Content);
 
@@ -17,10 +18,10 @@ namespace RPGCore.Inventory.Slots
 		{
 			var definition = (ArmorDefinition) item.Definition;
 
-			if (definition.ArmorType == m_slotType)
+			if (definition.ArmorType == m_armorType)
 			{
 				Content = item;
-				Set(definition.Icon.Data, definition.ItemColor(), 0);
+				Set(definition.Icon.Data, definition.ItemColor());
 				m_typeIcon.enabled = false;
 			}
 		}
@@ -30,7 +31,7 @@ namespace RPGCore.Inventory.Slots
 			if (selectedItem is ArmorItem weaponItem)
 			{
 				var definition = (ArmorDefinition) weaponItem.Definition;
-				return definition.ArmorType == m_slotType;
+				return definition.ArmorType == m_armorType;
 			}
 
 			return false;

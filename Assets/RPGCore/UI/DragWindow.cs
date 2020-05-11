@@ -62,7 +62,7 @@ namespace RPGCore.UI
 		public void OnDrag(DragEventData eventData)
 		{
 			m_previousPosition = RectTransform.position;
-			RectTransform.position += eventData.Delta;
+			RectTransform.position += eventData.PointerDelta;
 			KeepInScreen();
 		}
 
@@ -89,7 +89,7 @@ namespace RPGCore.UI
 			RectTransform.position = m_previousPosition;
 		}
 
-		public static Rect GetWorldRect(RectTransform rt, Vector2 scale)
+		public Rect GetWorldRect(RectTransform rt, Vector2 scale)
 		{
 			var corners = new Vector3[4];
 			rt.GetWorldCorners(corners);

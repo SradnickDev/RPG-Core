@@ -12,6 +12,7 @@ namespace RPGCore.Utilities
 		public static bool IsStackableWith(this BaseSlot slot, IItem item)
 		{
 			if (!IsStackable(item)) return false;
+			if (slot.GetType() != typeof(ItemSlot)) return false;
 
 			var slotItem = slot.Content;
 			return item.Definition.Id == slotItem.Definition.Id;

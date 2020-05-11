@@ -5,6 +5,7 @@ using RPGCore.Inventory.Slots;
 using RPGCore.Items;
 using RPGCore.Items.Types;
 using RPGCore.Utilities;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -23,43 +24,69 @@ namespace RPGCore.Inventory
 		[SerializeField] private List<SlotCollection> m_slotCollections;
 		[SerializeField] private Image m_dragableIcon;
 
-		[Header("Debug")]
-		[SerializeField] private Sprite m_debugSprite;
-
 		private BaseSlot this[int bagId, int slotIdx] => m_slotCollections[bagId][slotIdx];
 		private BaseSlot m_selectedSlot;
 		private IItem m_selectedItem;
 
 		private void Start()
 		{
-			Setup();
+			AssignId();
+			DebugStuff();
 		}
 
-		private void Setup()
+		private void DebugStuff()
 		{
-			var slots = new List<SlotCollection>
-			{
-				m_equipment,
-				m_weapons
-			};
-
-			slots.AddRange(m_slotCollections);
-
-			for (var i = 0; i < slots.Count; i++)
-			{
-				slots[i].Id = i;
-			}
-
+			var tx2d = EditorGUIUtility.FindTexture("console.erroricon");
+			var debugSprite = Sprite.Create(tx2d, new Rect(0, 0, tx2d.width, tx2d.height),
+											new Vector2(0.5f, 0.5f), 100f);
+			var debugSprite2 = Sprite.Create(tx2d, new Rect(0, 0, tx2d.width, tx2d.height),
+											 new Vector2(0.5f, 0.5f), 100f);
 			var def = new ArmorDefinition()
 			{
 				ArmorType = ArmorType.Chest,
 				DisplayName = "Chest",
 				Description = "debug Chest",
-				Icon = new SpriteModel(m_debugSprite),
+				Icon = new SpriteModel(debugSprite),
 				Id = ObjectId.GenerateNewId(),
 				Rarity = Rarity.Common
 			};
-			m_equipment[3].Add(new ArmorItem(def));
+
+			var weadef = new WeaponDefinition()
+			{
+				WeaponType = WeaponType.MainHand,
+				DisplayName = "MainHand",
+				Description = "MainHand debug",
+				Icon = new SpriteModel(debugSprite2),
+				Id = ObjectId.GenerateNewId(),
+				Rarity = Rarity.Legendary
+			};
+
+			var codef = new ConsumableItemDefinition()
+			{
+				DisplayName = "Consumable",
+				Description = "Consumable",
+				Icon = new SpriteModel(debugSprite2),
+				Id = ObjectId.GenerateNewId(),
+				Rarity = Rarity.Legendary
+			};
+
+			m_weapons[WeaponType.MainHand].Add(new WeaponItem(weadef));
+			m_equipment[ArmorType.Chest].Add(new ArmorItem(def));
+			this[0, 0].Add(new ConsumableItem(codef));
+		}
+
+		public void AssignId()
+		{
+			var slotCollections = new List<SlotCollection>
+			{
+				m_equipment,
+				m_weapons
+			};
+			slotCollections.AddRange(m_slotCollections);
+			for (var i = 0; i < slotCollections.Count; i++)
+			{
+				slotCollections[i].Id = i;
+			}
 		}
 
 		public void OnBeginDrag(PointerEventData eventData) => CheckDragableItem(eventData);

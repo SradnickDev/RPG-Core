@@ -13,7 +13,7 @@ namespace RPGCore.Inventory
 		}
 
 		private int m_id;
-		public BaseSlot this[int idx] => m_slots[idx];
-		[SerializeField] private List<BaseSlot> m_slots = new List<BaseSlot>();
+		public BaseSlot this[int idx] => Slots[idx];
+		[SerializeField] protected List<BaseSlot> Slots = new List<BaseSlot>();
 	}
 }

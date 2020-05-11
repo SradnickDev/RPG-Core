@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9992352c1c4ab1942510d212878a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_slots:
+  Slots:
   - {fileID: 3061533347700417416}
   - {fileID: 9082757218658035129}
   - {fileID: 2363476274197216552}
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ee347c65da41309f9e72c59b2b8371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_slots:
+  Slots:
   - {fileID: 2989363919628738231}
   - {fileID: 8618381940124772839}
 --- !u!1 &2870468696894185776
@@ -1083,7 +1083,7 @@ PrefabInstance:
     - target: {fileID: 1760767619754079734, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_Name
-      value: ArmorSlot (7)
+      value: ArmorSlot_Hands
       objectReference: {fileID: 0}
     - target: {fileID: 2843320024395757188, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
@@ -1094,6 +1094,11 @@ PrefabInstance:
     - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_slotType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
+        type: 3}
+      propertyPath: m_armorType
       value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1231,7 +1236,7 @@ PrefabInstance:
     - target: {fileID: 1760767619754079734, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_Name
-      value: ArmorSlot (1)
+      value: ArmorSlot_Neck
       objectReference: {fileID: 0}
     - target: {fileID: 2843320024395757188, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
@@ -1239,6 +1244,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 9b62d6f513e56784fb061e89664686d1,
         type: 3}
+    - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
+        type: 3}
+      propertyPath: m_armorType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b79702d2c625684ca320d99c746d09c, type: 3}
 --- !u!114 &3061533347700417416 stripped
@@ -1374,7 +1384,7 @@ PrefabInstance:
     - target: {fileID: 1760767619754079734, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_Name
-      value: ArmorSlot (6)
+      value: ArmorSlot_Feet
       objectReference: {fileID: 0}
     - target: {fileID: 2843320024395757188, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
@@ -1385,6 +1395,11 @@ PrefabInstance:
     - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_slotType
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
+        type: 3}
+      propertyPath: m_armorType
       value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1522,7 +1537,7 @@ PrefabInstance:
     - target: {fileID: 1760767619754079734, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_Name
-      value: ArmorSlot (3)
+      value: ArmorSlot_Back
       objectReference: {fileID: 0}
     - target: {fileID: 2843320024395757188, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
@@ -1533,6 +1548,11 @@ PrefabInstance:
     - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_slotType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
+        type: 3}
+      propertyPath: m_armorType
       value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1565,7 +1585,7 @@ PrefabInstance:
     - target: {fileID: 1053827636415827594, guid: df0f81cd8872ebf4eb68e79af811c288,
         type: 3}
       propertyPath: m_Name
-      value: WeaponSlot (1)
+      value: WeaponSlot_OffHand
       objectReference: {fileID: 0}
     - target: {fileID: 1053827636415827597, guid: df0f81cd8872ebf4eb68e79af811c288,
         type: 3}
@@ -1678,6 +1698,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: a65290cce0f88aa4998e5e1261284a6d,
         type: 3}
+    - target: {fileID: 5000167117553808198, guid: df0f81cd8872ebf4eb68e79af811c288,
+        type: 3}
+      propertyPath: m_weaponType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df0f81cd8872ebf4eb68e79af811c288, type: 3}
 --- !u!114 &8618381940124772839 stripped
@@ -1813,7 +1838,7 @@ PrefabInstance:
     - target: {fileID: 1760767619754079734, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_Name
-      value: ArmorSlot (5)
+      value: ArmorSlot_Head
       objectReference: {fileID: 0}
     - target: {fileID: 2843320024395757188, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
@@ -1956,7 +1981,7 @@ PrefabInstance:
     - target: {fileID: 1760767619754079734, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_Name
-      value: ArmorSlot (4)
+      value: ArmorSlot_Chest
       objectReference: {fileID: 0}
     - target: {fileID: 2843320024395757188, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
@@ -1967,6 +1992,11 @@ PrefabInstance:
     - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_slotType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
+        type: 3}
+      propertyPath: m_armorType
       value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2104,7 +2134,7 @@ PrefabInstance:
     - target: {fileID: 1760767619754079734, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_Name
-      value: ArmorSlot (8)
+      value: ArmorSlot_Legs
       objectReference: {fileID: 0}
     - target: {fileID: 2843320024395757188, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
@@ -2115,6 +2145,11 @@ PrefabInstance:
     - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_slotType
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
+        type: 3}
+      propertyPath: m_armorType
       value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2252,7 +2287,7 @@ PrefabInstance:
     - target: {fileID: 1760767619754079734, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
       propertyPath: m_Name
-      value: ArmorSlot (2)
+      value: ArmorSlot_Shoulder
       objectReference: {fileID: 0}
     - target: {fileID: 2843320024395757188, guid: 7b79702d2c625684ca320d99c746d09c,
         type: 3}
@@ -2260,6 +2295,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 22d0f5f5010ab1b44840df56c1e3203b,
         type: 3}
+    - target: {fileID: 3326631922647632116, guid: 7b79702d2c625684ca320d99c746d09c,
+        type: 3}
+      propertyPath: m_armorType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b79702d2c625684ca320d99c746d09c, type: 3}
 --- !u!114 &9082757218658035129 stripped
@@ -2290,7 +2330,7 @@ PrefabInstance:
     - target: {fileID: 1053827636415827594, guid: df0f81cd8872ebf4eb68e79af811c288,
         type: 3}
       propertyPath: m_Name
-      value: WeaponSlot
+      value: WeaponSlot_MainHand
       objectReference: {fileID: 0}
     - target: {fileID: 1053827636415827597, guid: df0f81cd8872ebf4eb68e79af811c288,
         type: 3}
@@ -2397,12 +2437,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3568524411984186872, guid: df0f81cd8872ebf4eb68e79af811c288,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a690303f769f8fd4098527ec9d12faa0,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df0f81cd8872ebf4eb68e79af811c288, type: 3}
 --- !u!224 &7099785738249249660 stripped

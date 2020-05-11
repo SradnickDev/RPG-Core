@@ -9,7 +9,8 @@ namespace RPGCore.Inventory.Slots
 {
 	public class WeaponSlot : BaseSlot
 	{
-		[SerializeField] private WeaponType m_slotType;
+		public WeaponType WeaponType => m_weaponType;
+		[SerializeField] private WeaponType m_weaponType;
 		[SerializeField] private Image m_typeIcon;
 		public override void Refresh() => Add(Content);
 
@@ -17,10 +18,10 @@ namespace RPGCore.Inventory.Slots
 		{
 			var definition = (WeaponDefinition) item.Definition;
 
-			if (definition.WeaponType == m_slotType)
+			if (definition.WeaponType == m_weaponType)
 			{
 				Content = item;
-				Set(definition.Icon.Data, definition.ItemColor(), 0);
+				Set(definition.Icon.Data, definition.ItemColor());
 				m_typeIcon.enabled = false;
 			}
 		}
@@ -30,7 +31,7 @@ namespace RPGCore.Inventory.Slots
 			if (selectedItem is WeaponItem weaponItem)
 			{
 				var definition = (WeaponDefinition) weaponItem.Definition;
-				return definition.WeaponType == m_slotType;
+				return definition.WeaponType == m_weaponType;
 			}
 
 			return false;
@@ -38,7 +39,7 @@ namespace RPGCore.Inventory.Slots
 
 		public override void Remove()
 		{
-			m_typeIcon.enabled = false;
+			m_typeIcon.enabled = true;
 			Content = null;
 			Clear();
 		}
