@@ -78,5 +78,17 @@ namespace RPGCore.Database.Item
 			throw new Exception("Cant Serialize Assets at runtime. Leave Play Mode!");
 		#endif
 		}
+
+		public virtual bool Unload()
+		{
+			if (m_object)
+			{
+				Object.Destroy(m_object);
+				Resources.UnloadUnusedAssets();
+				return true;
+			}
+			
+			return false;
+		}
 	}
 }
