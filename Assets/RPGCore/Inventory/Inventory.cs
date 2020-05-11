@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using RPGCore.Database.Item;
 using RPGCore.Inventory.Slots;
@@ -6,7 +7,6 @@ using RPGCore.Items;
 using RPGCore.Items.Types;
 using RPGCore.Stat;
 using RPGCore.Utilities;
-using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,13 +16,6 @@ using UnityEngine.UI;
 #pragma warning disable 0649
 namespace RPGCore.Inventory
 {
-	public class CharacterStatsView : MonoBehaviour
-	{
-		[SerializeField] private TextMeshProUGUI m_statsLabel;
-
-		public void Set(StatCollection stats) { }
-	}
-
 	public class Inventory : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 	{
 		public UnityEvent DragItem;
@@ -63,8 +56,11 @@ namespace RPGCore.Inventory
 				Description = "debug Chest",
 				Icon = new SpriteModel(debugSprite),
 				Id = ObjectId.GenerateNewId(),
-				Rarity = Rarity.Common
+				Rarity = Rarity.Common,
 			};
+			def.Stats.Add(new StatModifier(ModifierType.PercentOnDefault,-10,"Health"));
+			def.Stats.Add(new StatModifier(ModifierType.PercentOnCurrent,2,"Mana"));
+			def.Stats.Add(new StatModifier(ModifierType.Constant,10,"Strength"));
 
 			var weadef = new WeaponDefinition()
 			{

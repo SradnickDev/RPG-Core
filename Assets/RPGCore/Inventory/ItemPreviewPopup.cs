@@ -56,23 +56,23 @@ namespace RPGCore.Inventory
 
 		private void SetStats(ItemDefinition itemDefinition)
 		{
-			List<StatModifier> stats = null;
+			List<StatModifier> modifiers = null;
 
 			if (itemDefinition.GetType() == typeof(WeaponDefinition))
 			{
-				stats = ((WeaponDefinition) itemDefinition).Stats;
+				modifiers = ((WeaponDefinition) itemDefinition).Stats;
 			}
 
 			if (itemDefinition.GetType() == typeof(ArmorDefinition))
 			{
-				stats = ((ArmorDefinition) itemDefinition).Stats;
+				modifiers = ((ArmorDefinition) itemDefinition).Stats;
 			}
 
-			if (stats != null)
+			if (modifiers != null)
 			{
-				foreach (var stat in stats)
+				foreach (var modifier in modifiers)
 				{
-					m_contentLabel.text += $"+{stat.Value} {stat.GetType().Name} \n";
+					m_contentLabel.text += modifier.ToString() + "\n";
 				}
 
 				m_contentLabel.text += "\n";

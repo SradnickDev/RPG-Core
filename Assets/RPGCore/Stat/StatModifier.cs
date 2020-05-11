@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UnityEngine;
 
 namespace RPGCore.Stat
 {
@@ -20,6 +20,14 @@ namespace RPGCore.Stat
 			ModifierType = modifierType;
 			Value = value;
 			Source = source;
+		}
+
+		public override string ToString()
+		{
+			var sign = Value >= 0 ? "+" : "-";
+			var perc = ModifierType == ModifierType.Constant ? "" : "%";
+			var formattedVal = $"{sign} {Mathf.Abs(Value)} {perc} {Source}";
+			return Value != 0 ? formattedVal : "";
 		}
 	}
 }

@@ -1,5 +1,6 @@
 using RPGCore.Inventory.Slots;
 using RPGCore.Items;
+using RPGCore.Items.Types;
 
 namespace RPGCore.Inventory
 {
@@ -23,8 +24,26 @@ namespace RPGCore.Inventory
 			m_character = character;
 		}
 
-		public override void OnItemAdded(IItem item) { }
+		public override void OnItemAdded(IItem item)
+		{
+			var weaponItem = (WeaponItem) item;
+			var definition = (WeaponDefinition) weaponItem.Definition;
 
-		public override void OnItemRemoved(IItem item) { }
+			foreach (var statModifier in definition.Stats)
+			{
+				m_character.Stats[statModifier.Source].AddModifier(statModifier);
+			}
+		}
+
+		public override void OnItemRemoved(IItem item)
+		{
+			var weaponItem = (WeaponItem) item;
+			var definition = (WeaponDefinition) weaponItem.Definition;
+
+			foreach (var statModifier in definition.Stats)
+			{
+				m_character.Stats[statModifier.Source].RemoveModifer(statModifier);
+			}
+		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 using RPGCore.Stat.Types;
+using UnityEngine;
 
 namespace RPGCore.Stat
 {
@@ -29,6 +30,7 @@ namespace RPGCore.Stat
 		}
 
 		public float BaseValue = 0;
+		public float AdditionalValue => m_cachedValue - BaseValue;
 		private bool m_isDirty = false;
 
 		private readonly List<StatModifier> m_modifiers = new List<StatModifier>();
@@ -57,7 +59,7 @@ namespace RPGCore.Stat
 						retVal += modifier.Value;
 						break;
 					case ModifierType.PercentOnDefault:
-						retVal += Value * (modifier.Value / 100f);
+						retVal += BaseValue * (modifier.Value / 100f);
 						break;
 					case ModifierType.PercentOnCurrent:
 						retVal *= 1 + (modifier.Value / 100f);
@@ -96,5 +98,13 @@ namespace RPGCore.Stat
 		}
 
 		public override int GetHashCode() => GetType().Name.GetHashCode();
+
+		public override string ToString()
+		{
+			var sign = AdditionalValue >= 0 ? "+" : "-";
+			return AdditionalValue != 0
+				? $"{BaseValue} {sign} {Mathf.Abs(AdditionalValue)}"
+				: $"{BaseValue}";
+		}
 	}
 }

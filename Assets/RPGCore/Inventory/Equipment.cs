@@ -30,15 +30,21 @@ namespace RPGCore.Inventory
 			var armor = (ArmorItem) item;
 			var definition = (ArmorDefinition) armor.Definition;
 
-			foreach (var stat in definition.Stats)
+			foreach (var statModifier in definition.Stats)
 			{
-				
+				m_character.Stats[statModifier.Source]?.AddModifier(statModifier);
 			}
 		}
 
 		public override void OnItemRemoved(IItem item)
 		{
-			throw new NotImplementedException();
+			var armor = (ArmorItem) item;
+			var definition = (ArmorDefinition) armor.Definition;
+			
+			foreach (var statModifier in definition.Stats)
+			{
+				m_character.Stats[statModifier.Source]?.RemoveModifer(statModifier);
+			}
 		}
 	}
 }

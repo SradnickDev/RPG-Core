@@ -212,6 +212,7 @@ namespace RPGCore.Items.Editor
 
 			void Duplicate()
 			{
+				//TODO DELETE DEBUG CODE
 				for (int i = 0; i < 1000; i++)
 				{
 					var copy =
