@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RPGCore.Inventory.Slots;
 using RPGCore.Stat;
 
@@ -6,7 +7,7 @@ namespace RPGCore.Items.Types
 	public class ArmorDefinition : ItemDefinition
 	{
 		public ArmorType ArmorType;
-		public StatCollection Stats = new StatCollection();
+		public List<StatModifier> Stats = new List<StatModifier>();
 
 		public ArmorDefinition() : base() { }
 

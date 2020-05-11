@@ -23,6 +23,7 @@ namespace RPGCore.Inventory.Slots
 				Content = item;
 				Set(definition.Icon.Data, definition.ItemColor());
 				m_typeIcon.enabled = false;
+				OnAdded?.Invoke(item);
 			}
 		}
 
@@ -39,6 +40,7 @@ namespace RPGCore.Inventory.Slots
 
 		public override void Remove()
 		{
+			OnRemoved?.Invoke(Content);
 			m_typeIcon.enabled = true;
 			Content = null;
 			Clear();

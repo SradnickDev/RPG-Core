@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RPGCore.Inventory.Slots;
 using RPGCore.Items;
 using RPGCore.Items.Types;
@@ -55,7 +56,7 @@ namespace RPGCore.Inventory
 
 		private void SetStats(ItemDefinition itemDefinition)
 		{
-			StatCollection stats = null;
+			List<StatModifier> stats = null;
 
 			if (itemDefinition.GetType() == typeof(WeaponDefinition))
 			{

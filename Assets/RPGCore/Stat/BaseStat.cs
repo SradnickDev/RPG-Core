@@ -31,7 +31,7 @@ namespace RPGCore.Stat
 		public float BaseValue = 0;
 		private bool m_isDirty = false;
 
-		private readonly List<Modifier> m_modifiers = new List<Modifier>();
+		private readonly List<StatModifier> m_modifiers = new List<StatModifier>();
 		private float m_cachedValue;
 
 		[BsonIgnore]
@@ -68,16 +68,16 @@ namespace RPGCore.Stat
 			m_cachedValue = retVal;
 		}
 
-		public void AddModifier(Modifier modifier)
+		public void AddModifier(StatModifier statModifier)
 		{
 			m_isDirty = true;
-			m_modifiers.Add(modifier);
+			m_modifiers.Add(statModifier);
 			m_modifiers.Sort((a, b) => a.ModifierType.CompareTo(b.ModifierType));
 		}
 
-		public void RemoveModifer(Modifier modifier)
+		public void RemoveModifer(StatModifier statModifier)
 		{
-			if (m_modifiers.Remove(modifier))
+			if (m_modifiers.Remove(statModifier))
 			{
 				m_isDirty = true;
 			}

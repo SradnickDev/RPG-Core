@@ -165,8 +165,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_equipment: {fileID: 8428854035200749742}
-  m_weapons: {fileID: 1536945399695264655}
+  Equipment: {fileID: 8428854035200749742}
+  Weapons: {fileID: 1536945399695264655}
   m_slotCollections:
   - {fileID: 3809763841923879585}
   - {fileID: 5972591065086022613}

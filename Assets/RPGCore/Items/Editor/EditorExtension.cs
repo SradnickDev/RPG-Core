@@ -261,25 +261,31 @@ namespace RPGCore.Items.Editor
 
 			EditorGUI.EndProperty();
 		}
-		
-		public static void DrawStat(BaseStat stat, Action<BaseStat> onRemove)
+
+		public static void DrawStatModifier(StatModifier modifier,
+											float min,
+											float max,
+											float roundTo,
+											Action<StatModifier> onRemove)
 		{
 			GUILayout.BeginHorizontal();
-			stat.BaseValue =  DragProgressbar(stat.BaseValue
-															, stat.Min
-															, stat.Max
-															, Color.cyan
-															, new GUIContent(stat.GetType()
-																				 .Name
-																		   + " : ")
-															, GUILayout.ExpandWidth(true));
-			stat.BaseValue = Mathf.Round(stat.BaseValue * stat.RoundTo) / stat.RoundTo;
+			modifier.Value = DragProgressbar(modifier.Value
+										   , min
+										   , max
+										   , $"Modifier @ {modifier.Source}"
+										   , Color.cyan
+										   , GUILayout.ExpandWidth(true));
+			modifier.Value = Mathf.Round(modifier.Value * roundTo) / roundTo;
+
+			modifier.ModifierType =
+				(ModifierType) EditorGUILayout.EnumPopup(modifier.ModifierType,
+														 GUILayout.Width(150));
 
 			if (GUILayout.Button(EditorGUIUtility.IconContent("Toolbar Minus"),
 								 GUIStyle.none, GUILayout.ExpandWidth(false),
 								 GUILayout.ExpandHeight(true)))
 			{
-				onRemove(stat);
+				onRemove(modifier);
 			}
 
 			GUILayout.EndHorizontal();
@@ -289,12 +295,14 @@ namespace RPGCore.Items.Editor
 		public static float DragProgressbar(float current,
 											float min,
 											float max,
+											string label,
 											Color color,
-											GUIContent label,
 											params GUILayoutOption[] opts)
 		{
-			GUILayout.BeginHorizontal(new GUIStyle("Wizard Box"),opts);
-			GUILayout.Label(label, GUILayout.Width(150));
+			GUILayout.BeginHorizontal(new GUIStyle("Wizard Box"), opts);
+			var labelStyle = new GUIStyle("Wizard Box");
+			labelStyle.alignment = TextAnchor.MiddleCenter;
+			GUILayout.Label(new GUIContent(label),labelStyle, GUILayout.Width(150));
 			GUILayout.Label(min.ToString(), GUILayout.ExpandWidth(false));
 			var position = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, opts);
 			var retVal = DragProgressbar(position, current, min, max, color);
@@ -315,17 +323,17 @@ namespace RPGCore.Items.Editor
 				case EventType.Repaint:
 				{
 					var percentage = Mathf.InverseLerp(min, max, current);
-					var pixelWidth = (int) Mathf.Lerp(1f, controlRect.width, percentage);
+					var pixelWidth = Mathf.Lerp(1f, controlRect.width, percentage);
 					controlRect.y += 1;
 					var barRect = new Rect(controlRect)
 					{
 						width = pixelWidth,
-						height = EditorGUIUtility.singleLineHeight-1
+						height = EditorGUIUtility.singleLineHeight - 1
 					};
 
 					var backgroundRect = new Rect(controlRect)
 					{
-						height = EditorGUIUtility.singleLineHeight
+						height = EditorGUIUtility.singleLineHeight - 1
 					};
 
 					var labelRect = new Rect(controlRect)
@@ -333,13 +341,14 @@ namespace RPGCore.Items.Editor
 						height = EditorGUIUtility.singleLineHeight
 					};
 
-					GUI.color = new Color(color.r*0.3f,color.g*0.3f,color.b*0.3f,color.a*0.3f);
-					
+					GUI.color = new Color(color.r * 0.3f, color.g * 0.3f, color.b * 0.3f,
+										  color.a * 0.3f);
+
 					GUI.DrawTexture(backgroundRect, Texture2D.whiteTexture);
 					GUI.color = color;
 					GUI.DrawTexture(barRect, Texture2D.whiteTexture);
 					GUI.color = Color.black;
-					GUI.Label(labelRect, current.ToString(),EditorStyles.centeredGreyMiniLabel);
+					GUI.Label(labelRect, current.ToString(), EditorStyles.centeredGreyMiniLabel);
 					GUI.color = Color.white;
 					break;
 				}

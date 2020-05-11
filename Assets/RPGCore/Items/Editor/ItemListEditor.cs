@@ -212,15 +212,18 @@ namespace RPGCore.Items.Editor
 
 			void Duplicate()
 			{
-				var copy =
-					(ItemDefinition) Activator.CreateInstance(targetLabel.ItemDefinition.GetType(),
-															targetLabel.ItemDefinition);
-				copy.Id = ObjectId.GenerateNewId();
-				copy.DisplayName = "copy_" + copy.DisplayName;
-				var newLabel = new ItemLabelEditor(copy);
-				m_items.Add(newLabel);
+				for (int i = 0; i < 1000; i++)
+				{
+					var copy =
+						(ItemDefinition) Activator.CreateInstance(targetLabel.ItemDefinition.GetType(),
+																  targetLabel.ItemDefinition);
+					copy.Id = ObjectId.GenerateNewId();
+					copy.DisplayName = "copy_" + copy.DisplayName;
+					var newLabel = new ItemLabelEditor(copy);
+					m_items.Add(newLabel);
 
-				OnSelectionChanged(newLabel, m_window);
+					OnSelectionChanged(newLabel, m_window);
+				}
 			}
 
 			var menu = new GenericMenu();

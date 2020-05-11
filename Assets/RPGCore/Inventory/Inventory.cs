@@ -4,7 +4,9 @@ using RPGCore.Database.Item;
 using RPGCore.Inventory.Slots;
 using RPGCore.Items;
 using RPGCore.Items.Types;
+using RPGCore.Stat;
 using RPGCore.Utilities;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,24 +16,37 @@ using UnityEngine.UI;
 #pragma warning disable 0649
 namespace RPGCore.Inventory
 {
+	public class CharacterStatsView : MonoBehaviour
+	{
+		[SerializeField] private TextMeshProUGUI m_statsLabel;
+
+		public void Set(StatCollection stats) { }
+	}
+
 	public class Inventory : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 	{
 		public UnityEvent DragItem;
 		public UnityEvent DropItem;
 
-		[SerializeField] private Equipment m_equipment;
-		[SerializeField] private Weapons m_weapons;
+		public Equipment Equipment;
+		public Weapons Weapons;
 		[SerializeField] private List<SlotCollection> m_slotCollections;
 		[SerializeField] private Image m_dragableIcon;
 
 		private BaseSlot this[int bagId, int slotIdx] => m_slotCollections[bagId][slotIdx];
 		private BaseSlot m_selectedSlot;
 		private IItem m_selectedItem;
+		private Character m_owner;
 
 		private void Start()
 		{
 			AssignId();
 			DebugStuff();
+		}
+
+		public void Setup(Character owner)
+		{
+			m_owner = owner;
 		}
 
 		private void DebugStuff()
@@ -70,22 +85,16 @@ namespace RPGCore.Inventory
 				Rarity = Rarity.Legendary
 			};
 
-			m_weapons[WeaponType.MainHand].Add(new WeaponItem(weadef));
-			m_equipment[ArmorType.Chest].Add(new ArmorItem(def));
+			Weapons[WeaponType.MainHand].Add(new WeaponItem(weadef));
+			Equipment[ArmorType.Chest].Add(new ArmorItem(def));
 			this[0, 0].Add(new ConsumableItem(codef));
 		}
 
 		public void AssignId()
 		{
-			var slotCollections = new List<SlotCollection>
+			for (var i = 0; i < m_slotCollections.Count; i++)
 			{
-				m_equipment,
-				m_weapons
-			};
-			slotCollections.AddRange(m_slotCollections);
-			for (var i = 0; i < slotCollections.Count; i++)
-			{
-				slotCollections[i].Id = i;
+				m_slotCollections[i].Id = i;
 			}
 		}
 

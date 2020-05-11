@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RPGCore.Items.Types;
 using RPGCore.Stat;
 using UnityEditor;
@@ -7,6 +8,11 @@ namespace RPGCore.Items.Editor
 {
 	internal class ItemStatsDrawer : ItemBodyDrawer
 	{
+
+		public ItemStatsDrawer()
+		{
+		}
+
 		public override void Draw(EditorWindow editorWindow)
 		{
 			if (Definition == null) return;
@@ -21,7 +27,7 @@ namespace RPGCore.Items.Editor
 			GUILayout.Space(20);
 
 			GUILayout.BeginVertical();
-			StatCollection stats = null;
+			List<StatModifier> stats = null;
 			if (Definition.GetType() == typeof(ArmorDefinition))
 			{
 				stats = ((ArmorDefinition) Definition).Stats;
@@ -34,8 +40,10 @@ namespace RPGCore.Items.Editor
 
 			for (var i = 0; i < stats.Count; i++)
 			{
+
 				var stat = stats[i];
-				EditorExtension.DrawStat(stat, s => stats.Remove(s));
+				EditorExtension.DrawStatModifier(stat, 0, 100, 1,
+												 s => stats.Remove(s));
 			}
 
 			GUILayout.EndVertical();
@@ -51,7 +59,7 @@ namespace RPGCore.Items.Editor
 												  , t =>
 													{
 														t.BaseValue = 20;
-														stats?.Add(t);
+														stats?.Add(new StatModifier(t.GetType().Name));
 													}, EditorStyles.toolbarButton);
 
 			if (GUILayout.Button(EditorGUIUtility.IconContent("TreeEditor.Trash"),

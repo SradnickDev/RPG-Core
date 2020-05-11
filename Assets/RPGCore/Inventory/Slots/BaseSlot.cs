@@ -1,4 +1,5 @@
-﻿using RPGCore.Items;
+﻿using System;
+using RPGCore.Items;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,9 @@ namespace RPGCore.Inventory.Slots
 {
 	public abstract class BaseSlot : MonoBehaviour
 	{
+		public Action<IItem> OnAdded;
+		public Action<IItem> OnRemoved;
+		
 		public virtual bool IsEmpty => Content == null;
 
 		[SerializeField] private Image m_icon;
