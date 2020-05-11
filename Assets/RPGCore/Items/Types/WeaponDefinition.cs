@@ -1,3 +1,4 @@
+using RPGCore.Database.Item;
 using RPGCore.Inventory.Slots;
 using RPGCore.Stat;
 
@@ -6,6 +7,8 @@ namespace RPGCore.Items.Types
 	public class WeaponDefinition : ItemDefinition
 	{
 		public WeaponType WeaponType;
+		public AnimOverrideControllerModel m_animatorOverrideController;
+
 		public StatCollection Stats = new StatCollection();
 
 		public WeaponDefinition() : base() { }
@@ -14,6 +17,7 @@ namespace RPGCore.Items.Types
 		{
 			Stats = definition.Stats;
 			WeaponType = definition.WeaponType;
+			m_animatorOverrideController = definition.m_animatorOverrideController;
 		}
 
 		public WeaponItem Initialize()

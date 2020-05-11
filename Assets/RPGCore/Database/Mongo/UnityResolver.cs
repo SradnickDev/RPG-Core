@@ -19,6 +19,10 @@ namespace RPGCore.Database.Mongo
 				{
 					{typeof(SpriteModel), new SpriteModelFormatter()},
 					{typeof(AudioClipModel), new AudioClipModelFormatter()},
+					{
+						typeof(AnimOverrideControllerModel),
+						new AnimOverrideControllerModelFormatter()
+					},
 				};
 
 			internal static IBsonSerializer GetFormatter(Type t)

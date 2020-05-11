@@ -39,4 +39,22 @@ namespace RPGCore.Database.Mongo
 			context.Writer.WriteString(modelReference);
 		}
 	}
+	
+	internal sealed class AnimOverrideControllerModelFormatter : SerializerBase<AnimOverrideControllerModel>
+	{
+		public override AnimOverrideControllerModel Deserialize(BsonDeserializationContext context,
+																BsonDeserializationArgs args)
+		{
+			var content = context.Reader.ReadString();
+			return new AnimOverrideControllerModel(content);
+		}
+
+		public override void Serialize(BsonSerializationContext context,
+									   BsonSerializationArgs args,
+									   AnimOverrideControllerModel value)
+		{
+			var modelReference = value.Save();
+			context.Writer.WriteString(modelReference);
+		}
+	}
 }
