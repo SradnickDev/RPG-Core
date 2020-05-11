@@ -48,12 +48,11 @@ namespace RPGCore.Inventory
 			{
 				m_statsLabel.text = m_stringBuilder.ToString();
 			}
+			m_stringBuilder.Clear();
 		}
 
 		private void FormatStat(BaseStat stat)
 		{
-			m_stringBuilder.Clear();
-
 			var statColor = Color.white;
 
 			if (stat.Value > stat.BaseValue) statColor = Color.green;
@@ -62,6 +61,7 @@ namespace RPGCore.Inventory
 
 			m_stringBuilder
 				.Append($"<link=\"{stat.ToString()}\">{stat.GetType().Name} : <color=#{colorCode}>{stat.Value}</color></link>");
+			m_stringBuilder.Append("\n");
 		}
 
 		private void CheckStatIntersection()

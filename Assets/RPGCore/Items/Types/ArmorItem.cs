@@ -2,6 +2,7 @@ namespace RPGCore.Items.Types
 {
 	public class ArmorItem : UniqueItem
 	{
+		public ArmorDefinition ArmorDefinition => (ArmorDefinition)Definition;
 		public ArmorItem(ArmorDefinition definition)
 		{
 			Definition = new ArmorDefinition(definition);

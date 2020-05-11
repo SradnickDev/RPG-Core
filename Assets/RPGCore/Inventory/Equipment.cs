@@ -1,4 +1,3 @@
-using System;
 using RPGCore.Inventory.Slots;
 using RPGCore.Items;
 using RPGCore.Items.Types;
@@ -27,8 +26,7 @@ namespace RPGCore.Inventory
 
 		public override void OnItemAdded(IItem item)
 		{
-			var armor = (ArmorItem) item;
-			var definition = (ArmorDefinition) armor.Definition;
+			var definition = (ArmorDefinition) item.Definition;
 
 			foreach (var statModifier in definition.Stats)
 			{
@@ -38,9 +36,8 @@ namespace RPGCore.Inventory
 
 		public override void OnItemRemoved(IItem item)
 		{
-			var armor = (ArmorItem) item;
-			var definition = (ArmorDefinition) armor.Definition;
-			
+			var definition = (ArmorDefinition) item.Definition;
+
 			foreach (var statModifier in definition.Stats)
 			{
 				m_character.Stats[statModifier.Source]?.RemoveModifer(statModifier);

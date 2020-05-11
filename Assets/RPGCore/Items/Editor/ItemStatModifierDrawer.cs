@@ -6,10 +6,10 @@ using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	internal class ItemStatsDrawer : ItemBodyDrawer
+	internal class ItemStatModifierDrawer : ItemBodyDrawer
 	{
 
-		public ItemStatsDrawer()
+		public ItemStatModifierDrawer()
 		{
 		}
 

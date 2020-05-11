@@ -6,7 +6,7 @@ namespace RPGCore.Items.Editor
 	internal class ItemBodyEditor : IEditorComponent
 	{
 		private ItemInfoDrawer m_itemInfoDrawer;
-		private ItemStatsDrawer m_itemStatsDrawer;
+		private ItemStatModifierDrawer m_itemStatModifierDrawer;
 		private ItemBehaviourDrawer m_itemBehaviourDrawer;
 		private ItemOtherDrawer m_itemOtherDrawer;
 
@@ -19,7 +19,7 @@ namespace RPGCore.Items.Editor
 		public ItemBodyEditor()
 		{
 			m_itemInfoDrawer = new ItemInfoDrawer();
-			m_itemStatsDrawer = new ItemStatsDrawer();
+			m_itemStatModifierDrawer = new ItemStatModifierDrawer();
 			m_itemBehaviourDrawer = new ItemBehaviourDrawer();
 			m_itemOtherDrawer = new ItemOtherDrawer();
 		}
@@ -33,7 +33,7 @@ namespace RPGCore.Items.Editor
 			}
 
 			m_itemInfoDrawer.Definition = definition;
-			m_itemStatsDrawer.Definition = definition;
+			m_itemStatModifierDrawer.Definition = definition;
 			m_itemBehaviourDrawer.Definition = definition;
 			m_itemOtherDrawer.Definition = definition;
 
@@ -83,7 +83,7 @@ namespace RPGCore.Items.Editor
 			switch (m_currentTab)
 			{
 				case 0:
-					m_itemStatsDrawer.Draw(m_editorWindow);
+					m_itemStatModifierDrawer.Draw(m_editorWindow);
 					break;
 				case 1:
 					m_itemBehaviourDrawer.Draw(m_editorWindow);

@@ -15,7 +15,13 @@ public class Character : MonoBehaviour
 
 	private void Start()
 	{
-		m_stats.Add(new Health(100));
+		m_stats.Add(new Health(10));
+		m_stats.Add(new Mana(10));
+		m_stats.Add(new Strength(10));
+		m_stats.Add(new Intelligence(10));
+
+		Debug.Log(m_stats.Count);
+		
 		m_inventory.Setup(this);
 		m_equipment.Setup(this);
 		m_weapons.Setup(this);

@@ -58,9 +58,9 @@ namespace RPGCore.Inventory
 				Id = ObjectId.GenerateNewId(),
 				Rarity = Rarity.Common,
 			};
-			def.Stats.Add(new StatModifier(ModifierType.PercentOnDefault,-10,"Health"));
-			def.Stats.Add(new StatModifier(ModifierType.PercentOnCurrent,2,"Mana"));
-			def.Stats.Add(new StatModifier(ModifierType.Constant,10,"Strength"));
+			def.Stats.Add(new StatModifier(ModifierType.Constant,-10,"Strength"));
+			def.Stats.Add(new StatModifier(ModifierType.PercentOnCurrent,2,"Strength"));
+			def.Stats.Add(new StatModifier(ModifierType.PercentOnDefault,10,"Strength"));
 
 			var weadef = new WeaponDefinition()
 			{
@@ -71,6 +71,9 @@ namespace RPGCore.Inventory
 				Id = ObjectId.GenerateNewId(),
 				Rarity = Rarity.Legendary
 			};
+			weadef.Stats.Add(new StatModifier(ModifierType.Constant,10,"Health"));
+			weadef.Stats.Add(new StatModifier(ModifierType.PercentOnCurrent,5,"Health"));
+			weadef.Stats.Add(new StatModifier(ModifierType.PercentOnDefault,10,"Health"));
 
 			var codef = new ConsumableItemDefinition()
 			{

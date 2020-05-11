@@ -1,10 +1,8 @@
-using RPGCore.Stat;
-
 namespace RPGCore.Items.Types
 {
 	public class WeaponItem : UniqueItem
 	{
-		public StatCollection Stats;
+		public WeaponDefinition WeaponDefinitionDefinition => (WeaponDefinition) Definition;
 
 		public WeaponItem(WeaponDefinition definition)
 		{

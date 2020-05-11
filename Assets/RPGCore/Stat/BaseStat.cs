@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 using RPGCore.Stat.Types;
 using UnityEngine;
@@ -31,19 +32,10 @@ namespace RPGCore.Stat
 
 		public float BaseValue = 0;
 		public float AdditionalValue => m_cachedValue - BaseValue;
-		private bool m_isDirty = false;
+		private bool m_isDirty = true;
 
 		private readonly List<StatModifier> m_modifiers = new List<StatModifier>();
 		private float m_cachedValue;
-
-		[BsonIgnore]
-		public virtual float Min { get; set; } = 0;
-
-		[BsonIgnore]
-		public virtual float Max { get; set; } = 100;
-
-		[BsonIgnore]
-		public virtual float RoundTo { get; set; } = 1f;
 
 		public BaseStat() { }
 
@@ -67,7 +59,8 @@ namespace RPGCore.Stat
 				}
 			}
 
-			m_cachedValue = retVal;
+
+			m_cachedValue = Mathf.Round(retVal * 10f) / 10f;
 		}
 
 		public void AddModifier(StatModifier statModifier)
@@ -101,10 +94,12 @@ namespace RPGCore.Stat
 
 		public override string ToString()
 		{
-			var sign = AdditionalValue >= 0 ? "+" : "-";
-			return AdditionalValue != 0
-				? $"{BaseValue} {sign} {Mathf.Abs(AdditionalValue)}"
-				: $"{BaseValue}";
+			var sign = AdditionalValue > 0 ? "+" : "-";
+			if (m_modifiers.Count == 0)
+			{
+				return $"{BaseValue}";
+			}
+			return $"{BaseValue} {sign} {Mathf.Abs(AdditionalValue)}";
 		}
 	}
 }
