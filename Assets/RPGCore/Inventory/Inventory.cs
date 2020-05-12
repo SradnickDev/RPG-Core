@@ -29,7 +29,7 @@ namespace RPGCore.Inventory
 		private BaseSlot this[int bagId, int slotIdx] => m_slotCollections[bagId][slotIdx];
 		private BaseSlot m_selectedSlot;
 		private IItem m_selectedItem;
-		private Character m_owner;
+		private Character.Character m_owner;
 
 		private void Start()
 		{
@@ -37,7 +37,7 @@ namespace RPGCore.Inventory
 			DebugStuff();
 		}
 
-		public void Setup(Character owner)
+		public void Setup(Character.Character owner)
 		{
 			m_owner = owner;
 		}

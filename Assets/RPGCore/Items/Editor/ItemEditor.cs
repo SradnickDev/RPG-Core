@@ -8,41 +8,31 @@ using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	internal class ItemEditor : EditorWindow
+	internal class ItemEditor : IEditorComponent
 	{
+		public EditorWindow Window { get; set; }
+
 		private ItemToolBarEditor m_itemToolBarEditor;
 		private ItemListEditor m_itemListEditor;
 		private ItemBodyEditor m_itemBodyEditor;
 		private bool m_loaded = false;
 
-		private const float DefaultWidth = 1200f;
-		private const float DefaultHeight = 800f;
-
-		[MenuItem("RPGCore/Item Editor")]
-		public static void Open()
+		public ItemEditor()
 		{
-			var editor = GetWindow<ItemEditor>();
-			editor.maximized = false;
-			editor.position = new Rect((Screen.width - DefaultWidth) / 2,
-									   (Screen.height - DefaultHeight) / 2, DefaultWidth,
-									   DefaultHeight);
-
-			editor.titleContent = new GUIContent("Item Editor");
-			editor.Show();
+			m_itemToolBarEditor = new ItemToolBarEditor(LoadItems, SaveItems, CreateItem);
+			m_itemListEditor = new ItemListEditor();
+			m_itemBodyEditor = new ItemBodyEditor();
 		}
 
-		private void OnEnable()
-		{
-			Setup();
-		}
-
-		private void Setup()
+		public void OnEnable()
 		{
 			ItemDatabase.Initialize();
 
-			m_itemToolBarEditor = new ItemToolBarEditor(LoadItems, SaveItems, CreateItem);
-			m_itemListEditor = new ItemListEditor(this);
-			m_itemBodyEditor = new ItemBodyEditor();
+			m_itemListEditor.Window = Window;
+			m_itemListEditor.OnEnable();
+
+			m_itemBodyEditor.Window = Window;
+			m_itemBodyEditor.OnEnable();
 
 			m_itemListEditor.SelectionChanged += label =>
 			{
@@ -110,15 +100,17 @@ namespace RPGCore.Items.Editor
 			context.ShowAsContext();
 		}
 
-		private void OnGUI()
+		public void Draw()
 		{
-			m_itemToolBarEditor.Draw(this);
+			m_itemToolBarEditor.Draw();
 
 			GUILayout.BeginHorizontal(GUILayout.ExpandWidth(true),
 									  GUILayout.ExpandHeight(true));
-			m_itemListEditor.Draw(this);
-			m_itemBodyEditor.Draw(this);
+			m_itemListEditor.Draw();
+			m_itemBodyEditor.Draw();
 			GUILayout.EndHorizontal();
 		}
+
+		public void OnDisable() { }
 	}
 }

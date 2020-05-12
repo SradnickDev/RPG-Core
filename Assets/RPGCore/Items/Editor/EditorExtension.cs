@@ -302,7 +302,7 @@ namespace RPGCore.Items.Editor
 			GUILayout.BeginHorizontal(new GUIStyle("Wizard Box"), opts);
 			var labelStyle = new GUIStyle("Wizard Box");
 			labelStyle.alignment = TextAnchor.MiddleCenter;
-			GUILayout.Label(new GUIContent(label),labelStyle, GUILayout.Width(150));
+			GUILayout.Label(new GUIContent(label), labelStyle, GUILayout.Width(150));
 			GUILayout.Label(min.ToString(), GUILayout.ExpandWidth(false));
 			var position = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, opts);
 			var retVal = DragProgressbar(position, current, min, max, color);
@@ -384,6 +384,41 @@ namespace RPGCore.Items.Editor
 			}
 
 			return current;
+		}
+
+		public static int Toolbar(int selected,
+								  GUIContent[] labels,
+								  params GUILayoutOption[] layout)
+		{
+			var styleLeft = new GUIStyle("ButtonLeft");
+			var styleMid = new GUIStyle("ButtonMid");
+			var styleRight = new GUIStyle("ButtonRight");
+
+			GUILayout.BeginHorizontal();
+
+			for (var i = 0; i < labels.Length; i++)
+			{
+				var label = labels[i];
+				var isActive = selected == i;
+				var style = styleLeft;
+				if (i > 0)
+				{
+					style = styleMid;
+				}
+
+				if (i == labels.Length - 1)
+				{
+					style = styleRight;
+				}
+
+				if (GUILayout.Toggle(isActive, label, style, layout))
+				{
+					selected = i;
+				}
+			}
+
+			GUILayout.EndHorizontal();
+			return selected;
 		}
 	#endif
 	}

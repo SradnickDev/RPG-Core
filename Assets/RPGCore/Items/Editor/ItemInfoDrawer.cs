@@ -6,7 +6,7 @@ namespace RPGCore.Items.Editor
 {
 	internal class ItemInfoDrawer : ItemBodyDrawer
 	{
-		public override void Draw(EditorWindow editorWindow)
+		public override void Draw()
 		{
 			DrawItemInfo();
 		}

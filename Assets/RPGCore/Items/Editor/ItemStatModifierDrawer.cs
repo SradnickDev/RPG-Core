@@ -8,12 +8,9 @@ namespace RPGCore.Items.Editor
 {
 	internal class ItemStatModifierDrawer : ItemBodyDrawer
 	{
+		public ItemStatModifierDrawer() { }
 
-		public ItemStatModifierDrawer()
-		{
-		}
-
-		public override void Draw(EditorWindow editorWindow)
+		public override void Draw()
 		{
 			if (Definition == null) return;
 
@@ -40,7 +37,6 @@ namespace RPGCore.Items.Editor
 
 			for (var i = 0; i < stats.Count; i++)
 			{
-
 				var stat = stats[i];
 				EditorExtension.DrawStatModifier(stat, 0, 100, 1,
 												 s => stats.Remove(s));
@@ -59,7 +55,8 @@ namespace RPGCore.Items.Editor
 												  , t =>
 													{
 														t.BaseValue = 20;
-														stats?.Add(new StatModifier(t.GetType().Name));
+														stats?.Add(new StatModifier(t.GetType()
+																					 .Name));
 													}, EditorStyles.toolbarButton);
 
 			if (GUILayout.Button(EditorGUIUtility.IconContent("TreeEditor.Trash"),

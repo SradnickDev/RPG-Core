@@ -4,6 +4,9 @@ namespace RPGCore.Items.Editor
 {
 	internal interface IEditorComponent
 	{
-		void Draw(EditorWindow editorWindow);
+		EditorWindow Window { get; set; }
+		void OnEnable();
+		void Draw();
+		void OnDisable();
 	}
 }

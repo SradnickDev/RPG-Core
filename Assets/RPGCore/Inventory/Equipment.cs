@@ -7,7 +7,7 @@ namespace RPGCore.Inventory
 	public class Equipment : SlotCollection
 	{
 		public BaseSlot this[ArmorType type] => Slots.Find(slot => Match(slot, type));
-		private Character m_character;
+		private Character.Character m_character;
 
 		private bool Match(BaseSlot slot, ArmorType type)
 		{
@@ -19,7 +19,7 @@ namespace RPGCore.Inventory
 			return false;
 		}
 
-		public void Setup(Character character)
+		public void Setup(Character.Character character)
 		{
 			m_character = character;
 		}

@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace RPGCore.Stat
 {
+	[System.Serializable]
 	public class StatCollection : ICollection<BaseStat>
 	{
 		public int Count => m_items.Count;

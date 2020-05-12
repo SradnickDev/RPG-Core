@@ -6,6 +6,7 @@ namespace RPGCore.Items.Editor
 {
 	public class ItemLabelEditor : IEditorComponent
 	{
+		public EditorWindow Window { get; set; }
 		public string ItemName => m_itemDefinition.DisplayName;
 		public ItemDefinition ItemDefinition => m_itemDefinition;
 
@@ -26,7 +27,9 @@ namespace RPGCore.Items.Editor
 			m_itemDefinition = itemDefinition;
 		}
 
-		public void Draw(EditorWindow window)
+		public void OnEnable() { }
+
+		public void Draw()
 		{
 			if (m_itemDefinition == null)
 			{
@@ -77,5 +80,7 @@ namespace RPGCore.Items.Editor
 		{
 			m_style = DeselectedStyle;
 		}
+
+		public void OnDisable() { }
 	}
 }

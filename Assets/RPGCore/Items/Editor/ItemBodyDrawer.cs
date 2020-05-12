@@ -4,6 +4,8 @@ namespace RPGCore.Items.Editor
 {
 	internal abstract class ItemBodyDrawer : IEditorComponent
 	{
+		public EditorWindow Window { get; set; }
+
 		public ItemDefinition Definition
 		{
 			get => m_itemDefinition;
@@ -11,6 +13,9 @@ namespace RPGCore.Items.Editor
 		}
 
 		private ItemDefinition m_itemDefinition;
-		public abstract void Draw(EditorWindow editorWindow);
+		public virtual void OnEnable() { }
+
+		public abstract void Draw();
+		public virtual void OnDisable() { }
 	}
 }

@@ -4,28 +4,28 @@ using RPGCore.Stat.Types;
 using UnityEngine;
 
 #pragma warning disable 0649
-public class Character : MonoBehaviour
+namespace RPGCore.Character
 {
-	[SerializeField] private Inventory m_inventory;
-	[SerializeField] private Equipment m_equipment;
-	[SerializeField] private Weapons m_weapons;
-	[SerializeField] private CharacterStatsView m_statsView;
-	public StatCollection Stats => m_stats;
-	private StatCollection m_stats = new StatCollection();
-
-	private void Start()
+	public class Character : MonoBehaviour
 	{
-		m_stats.Add(new Health(10));
-		m_stats.Add(new Mana(10));
-		m_stats.Add(new Strength(10));
-		m_stats.Add(new Intelligence(10));
+		[SerializeField] private Inventory.Inventory m_inventory;
+		[SerializeField] private Equipment m_equipment;
+		[SerializeField] private Weapons m_weapons;
+		[SerializeField] private CharacterStatsView m_statsView;
+		public StatCollection Stats = new StatCollection();
 
-		Debug.Log(m_stats.Count);
-		
-		m_inventory.Setup(this);
-		m_equipment.Setup(this);
-		m_weapons.Setup(this);
-		m_statsView.Set(m_stats);
+		private void Start()
+		{
+			Stats.Add(new Health(10));
+			Stats.Add(new Mana(10));
+			Stats.Add(new Strength(10));
+			Stats.Add(new Intelligence(10));
+
+			m_inventory.Setup(this);
+			m_equipment.Setup(this);
+			m_weapons.Setup(this);
+			m_statsView.Set(Stats);
+		}
 	}
 }
 #pragma warning restore 0649
