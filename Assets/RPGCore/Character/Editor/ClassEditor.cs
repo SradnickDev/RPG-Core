@@ -35,7 +35,7 @@ namespace RPGCore.Character.Editor
 
 		public void Draw()
 		{
-			GUILayout.BeginHorizontal(EditorStyles.helpBox, GUILayout.ExpandWidth(true),
+			GUILayout.BeginHorizontal( GUILayout.ExpandWidth(true),
 									  GUILayout.ExpandHeight(true));
 			m_classList.Draw();
 			m_bodyEditor.Draw();

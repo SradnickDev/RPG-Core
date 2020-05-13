@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using MongoDB.Bson.Serialization.Attributes;
-using RPGCore.Stat.Types;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPGCore.Stat
 {
-#region BsonSerialization
-
-	[BsonDiscriminator(RootClass = true)]
-	[BsonKnownTypes(typeof(Health), typeof(Strength),
-					typeof(Mana), typeof(Intelligence), typeof(CritRate))]
-
-#endregion
-
 	public abstract class BaseStat
 	{
 		public float Value
@@ -36,6 +25,7 @@ namespace RPGCore.Stat
 
 		private readonly List<StatModifier> m_modifiers = new List<StatModifier>();
 		private float m_cachedValue;
+		public Growth Growth = new Growth();
 
 		public BaseStat() { }
 
@@ -99,6 +89,7 @@ namespace RPGCore.Stat
 			{
 				return $"{BaseValue}";
 			}
+
 			return $"{BaseValue} {sign} {Mathf.Abs(AdditionalValue)}";
 		}
 	}

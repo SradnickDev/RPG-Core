@@ -390,9 +390,9 @@ namespace RPGCore.Items.Editor
 								  GUIContent[] labels,
 								  params GUILayoutOption[] layout)
 		{
-			var styleLeft = new GUIStyle("ButtonLeft");
-			var styleMid = new GUIStyle("ButtonMid");
-			var styleRight = new GUIStyle("ButtonRight");
+			var styleLeft = new GUIStyle("AppToolbarButtonLeft");
+			var styleMid = new GUIStyle("AppToolbarButtonMid");
+			var styleRight = new GUIStyle("AppToolbarButtonRight");
 
 			GUILayout.BeginHorizontal();
 
