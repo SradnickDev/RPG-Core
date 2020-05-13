@@ -38,17 +38,17 @@ namespace RPGCore.Editor
 		{
 			m_tabs = new[]
 			{
-				new GUIContent("Item DB", EditorGUIUtility.FindTexture("SoftlockInline")),
-				new GUIContent("Character", EditorGUIUtility.FindTexture("SoftlockInline")),
-				new GUIContent("Placeholder", EditorGUIUtility.FindTexture("SoftlockInline")),
+				new GUIContent("Item DB", Resources.Load<Texture>("EditorIconItem")),
+				new GUIContent("Class", Resources.Load<Texture>("EditorIconChar")),
+				new GUIContent("Abilites", Resources.Load<Texture>("EditorIconAbility")),
 				new GUIContent("Placeholder", EditorGUIUtility.FindTexture("SoftlockInline")),
 			};
 			m_editors = new Dictionary<int, IEditorComponent>
 			{
 				{0, new ItemEditor()},
-				{1, new CharacterEditor()},
-				{2, new CharacterEditor()},
-				{3, new CharacterEditor()},
+				{1, new ClassEditor()},
+				{2, new ClassEditor()},
+				{3, new ClassEditor()},
 			};
 
 			foreach (var editor in m_editors.Values)

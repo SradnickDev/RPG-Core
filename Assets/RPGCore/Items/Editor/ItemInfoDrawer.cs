@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	internal class ItemInfoDrawer : ItemBodyDrawer
+	internal class ItemInfoDrawer : BodyDrawer<ItemDefinition>
 	{
 		public override void Draw()
 		{
@@ -21,29 +21,29 @@ namespace RPGCore.Items.Editor
 			labelStyle.normal.textColor = Color.grey;
 			labelStyle.fontSize = 9;
 
-			GUILayout.Label($"{Definition.ReadableType()}", labelStyle);
-			GUILayout.Label("Item ID :" + Definition.Id, labelStyle);
+			GUILayout.Label($"{Source.ReadableType()}", labelStyle);
+			GUILayout.Label("Item ID :" + Source.Id, labelStyle);
 			GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();
 
 			GUILayout.Label("Item Info", EditorStyles.boldLabel);
-			Definition.DisplayName =
-				EditorGUILayout.TextField("Display Name", Definition.DisplayName);
+			Source.DisplayName =
+				EditorGUILayout.TextField("Display Name", Source.DisplayName);
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("Description", GUILayout.Width(146));
-			Definition.Description =
-				EditorGUILayout.TextArea(Definition.Description, GUILayout.MaxWidth(450));
+			Source.Description =
+				EditorGUILayout.TextArea(Source.Description, GUILayout.MaxWidth(450));
 
 			GUILayout.EndHorizontal();
 
-			Definition.Rarity =
-				(Rarity) EditorGUILayout.EnumPopup("Rarity ", Definition.Rarity);
+			Source.Rarity =
+				(Rarity) EditorGUILayout.EnumPopup("Rarity ", Source.Rarity);
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("Icon", GUILayout.Width(146));
-			Definition.Icon.Data =
-				(Sprite) EditorGUILayout.ObjectField(Definition.Icon.Data, typeof(Sprite),
+			Source.Icon.Data =
+				(Sprite) EditorGUILayout.ObjectField(Source.Icon.Data, typeof(Sprite),
 													 false,
 													 GUILayout.Width(65), GUILayout.Height(65));
 			GUILayout.EndHorizontal();

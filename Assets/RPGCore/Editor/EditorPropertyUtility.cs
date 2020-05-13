@@ -1,7 +1,7 @@
 using System.Reflection;
 using UnityEditor;
 
-namespace RPGCore.Character
+namespace RPGCore.Editor
 {
 	internal static class EditorPropertyUtility
 	{

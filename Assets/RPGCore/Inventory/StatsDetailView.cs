@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+#pragma warning disable 0649
 namespace RPGCore.Inventory
 {
 	public class StatsDetailView : MonoBehaviour
@@ -10,12 +11,13 @@ namespace RPGCore.Inventory
 		public void Show(string content)
 		{
 			m_detailLabel.text = content;
-			this.gameObject.SetActive(true);
+			gameObject.SetActive(true);
 		}
 
 		public void Hide()
 		{
-			this.gameObject.SetActive(false);
+			gameObject.SetActive(false);
 		}
 	}
 }
+#pragma warning restore 0649

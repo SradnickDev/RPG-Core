@@ -1,18 +1,20 @@
+using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	internal abstract class ItemBodyDrawer : IEditorComponent
+	internal abstract class BodyDrawer<T> : IEditorComponent
 	{
 		public EditorWindow Window { get; set; }
 
-		public ItemDefinition Definition
+		public T Source
 		{
-			get => m_itemDefinition;
-			set => m_itemDefinition = value;
+			get => m_source;
+			set => m_source = value;
 		}
 
-		private ItemDefinition m_itemDefinition;
+		private T m_source;
 		public virtual void OnEnable() { }
 
 		public abstract void Draw();

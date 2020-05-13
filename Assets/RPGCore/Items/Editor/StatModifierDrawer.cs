@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	internal class ItemStatModifierDrawer : ItemBodyDrawer
+	internal class StatModifierDrawer : BodyDrawer<ItemDefinition>
 	{
-		public ItemStatModifierDrawer() { }
+		public StatModifierDrawer() { }
 
 		public override void Draw()
 		{
-			if (Definition == null) return;
+			if (Source == null) return;
 
 			//TODO Add Error message if Definition is null
 
@@ -25,14 +25,14 @@ namespace RPGCore.Items.Editor
 
 			GUILayout.BeginVertical();
 			List<StatModifier> stats = null;
-			if (Definition.GetType() == typeof(ArmorDefinition))
+			if (Source.GetType() == typeof(ArmorDefinition))
 			{
-				stats = ((ArmorDefinition) Definition).Stats;
+				stats = ((ArmorDefinition) Source).Stats;
 			}
 
-			if (Definition.GetType() == typeof(WeaponDefinition))
+			if (Source.GetType() == typeof(WeaponDefinition))
 			{
-				stats = ((WeaponDefinition) Definition).Stats;
+				stats = ((WeaponDefinition) Source).Stats;
 			}
 
 			for (var i = 0; i < stats.Count; i++)

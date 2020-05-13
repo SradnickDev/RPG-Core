@@ -1,35 +1,33 @@
-﻿using RPGCore.Utilities;
-using UnityEditor;
+﻿using RPGCore.Character.Editor;
+using RPGCore.Editor;
+using RPGCore.Utilities;
 using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	public class ItemLabelEditor : IEditorComponent
+	public class ItemLabelEditor : ListLabel
 	{
-		public EditorWindow Window { get; set; }
 		public string ItemName => m_itemDefinition.DisplayName;
 		public ItemDefinition ItemDefinition => m_itemDefinition;
 
 		private ItemDefinition m_itemDefinition;
-		private Vector2 m_iconSize = new Vector2(30, 30);
-		private GUIStyle m_style;
-		private GUIStyle SelectedStyle => new GUIStyle("MeTransitionSelectHead");
-		private GUIStyle DeselectedStyle => new GUIStyle("PreferencesSectionBox");
 
-		public ItemLabelEditor(ItemDefinition itemDefinition)
+		public ItemLabelEditor(ItemDefinition itemDefinition) : base()
 		{
-			m_itemDefinition = itemDefinition;
-			m_style = DeselectedStyle;
+			Set(itemDefinition);
 		}
 
 		public void Set(ItemDefinition itemDefinition)
 		{
 			m_itemDefinition = itemDefinition;
+
+			Set(m_itemDefinition.DisplayName
+			  , m_itemDefinition.ReadableType()
+			  , m_itemDefinition.Icon.Data?.texture
+			  , m_itemDefinition.ItemColor());
 		}
 
-		public void OnEnable() { }
-
-		public void Draw()
+		public override void Draw()
 		{
 			if (m_itemDefinition == null)
 			{
@@ -37,50 +35,10 @@ namespace RPGCore.Items.Editor
 				return;
 			}
 
-			DrawLabel();
+			UpdateLabelInformation();
+			base.Draw();
 		}
 
-		private void DrawLabel()
-		{
-			GUILayout.BeginHorizontal(m_style
-									, GUILayout.ExpandWidth(true)
-									, GUILayout.MaxHeight(30)
-									, GUILayout.Height(30));
-			{
-				var icon = m_itemDefinition.Icon.Data == null
-					? EditorGUIUtility.FindTexture("BuildSettings.Broadcom")
-					: m_itemDefinition.Icon.Data.texture;
-
-				GUILayout.Label(icon, GUILayout.Height(m_iconSize.x), GUILayout.Width(m_iconSize.y),
-								GUILayout.MaxHeight(30));
-
-				GUILayout.BeginVertical();
-				{
-					var labelStyle = new GUIStyle(GUI.skin.label);
-					labelStyle.alignment = TextAnchor.MiddleLeft;
-					labelStyle.normal.textColor = m_itemDefinition.ItemColor();
-					GUILayout.Label(ItemName, labelStyle);
-
-
-					labelStyle.normal.textColor = Color.black;
-					labelStyle.fontSize = 9;
-					GUILayout.Label(m_itemDefinition.ReadableType(), labelStyle);
-				}
-				GUILayout.EndVertical();
-			}
-			GUILayout.EndHorizontal();
-		}
-
-		public void Select()
-		{
-			m_style = SelectedStyle;
-		}
-
-		public void Deselect()
-		{
-			m_style = DeselectedStyle;
-		}
-
-		public void OnDisable() { }
+		private void UpdateLabelInformation() => Set(m_itemDefinition);
 	}
 }

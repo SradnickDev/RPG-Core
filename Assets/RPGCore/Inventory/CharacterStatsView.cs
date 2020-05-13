@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+#pragma warning disable 0649
 namespace RPGCore.Inventory
 {
 	public class CharacterStatsView : MonoBehaviour
@@ -48,6 +49,7 @@ namespace RPGCore.Inventory
 			{
 				m_statsLabel.text = m_stringBuilder.ToString();
 			}
+
 			m_stringBuilder.Clear();
 		}
 
@@ -107,3 +109,4 @@ namespace RPGCore.Inventory
 		}
 	}
 }
+#pragma warning restore 0649

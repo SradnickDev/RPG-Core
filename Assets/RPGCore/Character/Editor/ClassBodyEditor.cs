@@ -1,10 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using RPGCore.Items;
+using RPGCore.Items.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace RPGCore.Items.Editor
+namespace RPGCore.Character.Editor
 {
-	internal class ItemBodyEditor : IEditorComponent
+	internal class ClassBodyEditor : IEditorComponent
 	{
 		public EditorWindow Window
 		{
@@ -21,17 +23,17 @@ namespace RPGCore.Items.Editor
 
 		private EditorWindow m_window;
 
-		private ItemInfoDrawer m_itemInfoDrawer;
+		private ClassInfoDrawer m_classInfoDrawer;
 
-		private ItemDefinition m_itemDefinition;
+		private CharacterClass m_charClass;
 		private bool m_draw = false;
 		private int m_currentTab = 0;
-		private string[] m_tabs = new[] {"Stats", "Behaviour", "Other"};
+		private string[] m_tabs = new[] {"LvL & Stats", "Behaviour", "Other"};
 		private Dictionary<int, BodyDrawer<ItemDefinition>> m_components;
 
-		public ItemBodyEditor()
+		public ClassBodyEditor()
 		{
-			m_itemInfoDrawer = new ItemInfoDrawer();
+			m_classInfoDrawer = new ClassInfoDrawer();
 
 			m_components = new Dictionary<int, BodyDrawer<ItemDefinition>>()
 			{
@@ -41,21 +43,21 @@ namespace RPGCore.Items.Editor
 			};
 		}
 
-		public void Set(ItemDefinition definition)
+		public void Set(CharacterClass charClass)
 		{
-			if (definition == null)
+			if (charClass == null)
 			{
 				m_draw = false;
-				m_itemDefinition = null;
+				m_charClass = null;
 			}
 
-			m_itemInfoDrawer.Source = definition;
+			m_classInfoDrawer.Source = charClass;
 			foreach (var cp in m_components.Values)
 			{
-				cp.Source = definition;
+				//cp.CharacterClass = charClass;
 			}
 
-			m_itemDefinition = definition;
+			m_charClass = charClass;
 			EditorGUI.FocusTextInControl("");
 			Window.Repaint();
 		}
@@ -73,7 +75,7 @@ namespace RPGCore.Items.Editor
 			GUILayout.BeginHorizontal(GUILayout.ExpandWidth(true)
 									, GUILayout.ExpandHeight(true));
 
-			if (Event.current.type == EventType.Layout && m_itemDefinition != null)
+			if (Event.current.type == EventType.Layout && m_charClass != null)
 			{
 				m_draw = true;
 			}
@@ -93,13 +95,13 @@ namespace RPGCore.Items.Editor
 			else
 			{
 				GUILayout.BeginVertical();
-				m_itemInfoDrawer.Draw();
-				DrawItemOptions();
+				m_classInfoDrawer.Draw();
+				DrawOptions();
 				GUILayout.EndVertical();
 			}
 		}
 
-		private void DrawItemOptions()
+		private void DrawOptions()
 		{
 			m_currentTab = GUILayout.Toolbar(m_currentTab, m_tabs);
 			GUILayout.BeginVertical();

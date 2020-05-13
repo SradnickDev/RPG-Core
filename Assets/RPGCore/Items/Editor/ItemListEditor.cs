@@ -2,17 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
+using RPGCore.Character.Editor;
 using RPGCore.Database.Item;
+using RPGCore.Editor;
 using UnityEditor;
 using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	internal class ItemListEditor : IEditorComponent
+	internal class ItemListEditor : ResizeableEditor
 	{
 		public event Action<ItemLabelEditor> SelectionChanged;
-
-		public EditorWindow Window { get; set; }
 
 		public IEnumerable<ItemDefinition> Items =>
 			m_items.Select(item => item.ItemDefinition).ToList();
@@ -25,10 +25,6 @@ namespace RPGCore.Items.Editor
 		private readonly int[] m_visibleEntries = {10, 20, 40, 60, 80, 100};
 		private Event m_event;
 		private int m_currentPage = 1;
-		private bool m_isResizing = false;
-		private Rect m_changeRect;
-		private const float SplitWidth = 5;
-		private float m_horizontalSplitterPercent = 0.15f;
 
 		private int MaxPages =>
 			Mathf.Max(Mathf.CeilToInt(m_items.Count / (float) m_maxItemsPerPage), 1);
@@ -59,8 +55,6 @@ namespace RPGCore.Items.Editor
 			}
 		}
 
-		private float m_scrollViewWidth = 250;
-
 		public ItemListEditor()
 		{
 			m_items = new List<ItemLabelEditor>();
@@ -70,7 +64,9 @@ namespace RPGCore.Items.Editor
 
 		public void Add(ItemDefinition itemDefinition)
 		{
-			m_items.Add(new ItemLabelEditor(itemDefinition));
+			var newLabel = new ItemLabelEditor(itemDefinition);
+			newLabel.OnEnable();
+			m_items.Add(newLabel);
 		}
 
 		public void Set(IEnumerable<ItemDefinition> itemTemplate)
@@ -86,21 +82,13 @@ namespace RPGCore.Items.Editor
 			m_items = new List<ItemLabelEditor>();
 		}
 
-		public void Draw()
+		public override void Draw()
 		{
 			GUILayout.BeginVertical(GUILayout.ExpandHeight(true),
-									GUILayout.Width(m_scrollViewWidth));
+									GUILayout.Width(ListWidth));
 			DrawScrollView(Window);
 			DrawBottomToolbar();
 			GUILayout.EndVertical();
-		}
-
-		public void OnEnable()
-		{
-			m_changeRect = new Rect(m_scrollViewWidth,
-									Window.position.y,
-									SplitWidth,
-									Window.position.height);
 		}
 
 		private void DrawScrollView(EditorWindow window)
@@ -109,7 +97,7 @@ namespace RPGCore.Items.Editor
 													   , false
 													   , true
 													   , GUILayout.ExpandHeight(true)
-													   , GUILayout.Width(m_scrollViewWidth));
+													   , GUILayout.Width(ListWidth));
 			if (m_items.Count == 0)
 			{
 				GUILayout.Label("No Items available."
@@ -129,7 +117,6 @@ namespace RPGCore.Items.Editor
 			}
 
 			GUILayout.EndScrollView();
-			HandleHorizontalResize();
 		}
 
 		private void DrawBottomToolbar()
@@ -173,6 +160,7 @@ namespace RPGCore.Items.Editor
 
 
 			GUILayout.EndHorizontal();
+			HandleHorizontalResize();
 		}
 
 		private void UpdateSelection(ItemLabelEditor itemLabelEditor, EditorWindow window)
@@ -255,35 +243,5 @@ namespace RPGCore.Items.Editor
 				SelectionChanged?.Invoke(Selected);
 			}
 		}
-
-		private void HandleHorizontalResize()
-		{
-			EditorGUIUtility.AddCursorRect(m_changeRect, MouseCursor.ResizeHorizontal);
-
-			if (Event.current.type == EventType.MouseDown
-			 && m_changeRect.Contains(Event.current.mousePosition))
-			{
-				m_isResizing = true;
-			}
-
-
-			if (m_isResizing)
-			{
-				m_horizontalSplitterPercent =
-					Mathf.Clamp(Event.current.mousePosition.x / Window.position.width, 0.15f,
-								0.5f);
-				m_changeRect.x = (int) (Window.position.width * m_horizontalSplitterPercent);
-				m_scrollViewWidth = m_changeRect.x;
-
-				Window.Repaint();
-			}
-
-			if (Event.current.type == EventType.MouseUp)
-			{
-				m_isResizing = false;
-			}
-		}
-
-		public void OnDisable() { }
 	}
 }

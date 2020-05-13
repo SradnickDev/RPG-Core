@@ -2,7 +2,7 @@ using UnityEditor;
 
 namespace RPGCore.Items.Editor
 {
-	internal class ItemBehaviourDrawer : ItemBodyDrawer
+	internal class OtherDrawer : BodyDrawer<ItemDefinition>
 	{
 		public override void Draw() { }
 	}
