@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	internal abstract class BodyDrawer<T> : IEditorComponent
+	internal abstract class EditorComponent<T> : IEditorComponent
 	{
 		public EditorWindow Window { get; set; }
 

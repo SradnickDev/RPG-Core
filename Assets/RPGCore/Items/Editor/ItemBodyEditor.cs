@@ -21,23 +21,23 @@ namespace RPGCore.Items.Editor
 
 		private EditorWindow m_window;
 
-		private ItemInfoDrawer m_itemInfoDrawer;
+		private ItemInfoEditorComponent m_itemInfoEditorComponent;
 
 		private ItemDefinition m_itemDefinition;
 		private bool m_draw = false;
 		private int m_currentTab = 0;
 		private string[] m_tabs = new[] {"Stats", "Behaviour", "Other"};
-		private Dictionary<int, BodyDrawer<ItemDefinition>> m_components;
+		private Dictionary<int, EditorComponent<ItemDefinition>> m_components;
 
 		public ItemBodyEditor()
 		{
-			m_itemInfoDrawer = new ItemInfoDrawer();
+			m_itemInfoEditorComponent = new ItemInfoEditorComponent();
 
-			m_components = new Dictionary<int, BodyDrawer<ItemDefinition>>()
+			m_components = new Dictionary<int, EditorComponent<ItemDefinition>>()
 			{
-				{0, new StatModifierDrawer()},
-				{1, new BehaviourDrawer()},
-				{2, new OtherDrawer()},
+				{0, new StatModifierEditorComponent()},
+				{1, new ItemBehaviourEditorComponent()},
+				{2, new OtherEditorComponent()},
 			};
 		}
 
@@ -49,7 +49,7 @@ namespace RPGCore.Items.Editor
 				m_itemDefinition = null;
 			}
 
-			m_itemInfoDrawer.Source = definition;
+			m_itemInfoEditorComponent.Source = definition;
 			foreach (var cp in m_components.Values)
 			{
 				cp.Source = definition;
@@ -93,7 +93,7 @@ namespace RPGCore.Items.Editor
 			else
 			{
 				GUILayout.BeginVertical();
-				m_itemInfoDrawer.Draw();
+				m_itemInfoEditorComponent.Draw();
 				DrawItemOptions();
 				GUILayout.EndVertical();
 			}

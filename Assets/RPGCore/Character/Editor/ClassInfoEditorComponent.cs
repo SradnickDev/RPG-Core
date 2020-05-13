@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RPGCore.Character.Editor
 {
-	internal class ClassInfoDrawer : BodyDrawer<CharacterClass>
+	internal class ClassInfoEditorComponent : EditorComponent<CharacterClass>
 	{
 		public override void Draw()
 		{

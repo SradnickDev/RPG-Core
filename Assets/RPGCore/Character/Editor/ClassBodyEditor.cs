@@ -23,23 +23,23 @@ namespace RPGCore.Character.Editor
 
 		private EditorWindow m_window;
 
-		private ClassInfoDrawer m_classInfoDrawer;
+		private ClassInfoEditorComponent m_classInfoEditorComponent;
 
 		private CharacterClass m_charClass;
 		private bool m_draw = false;
 		private int m_currentTab = 0;
 		private string[] m_tabs = new[] {"LvL & Stats", "Behaviour", "Other"};
-		private Dictionary<int, BodyDrawer<ItemDefinition>> m_components;
+		private Dictionary<int, EditorComponent<CharacterClass>> m_components;
 
 		public ClassBodyEditor()
 		{
-			m_classInfoDrawer = new ClassInfoDrawer();
+			m_classInfoEditorComponent = new ClassInfoEditorComponent();
 
-			m_components = new Dictionary<int, BodyDrawer<ItemDefinition>>()
+			m_components = new Dictionary<int, EditorComponent<CharacterClass>>()
 			{
-				{0, new StatModifierDrawer()},
-				{1, new BehaviourDrawer()},
-				{2, new OtherDrawer()},
+				{0, new ClassStatsEditorComponent()},
+				{1, new ClassBehaviourEditorComponent()},
+				{2, new ClassOtherEditorComponent()},
 			};
 		}
 
@@ -51,10 +51,10 @@ namespace RPGCore.Character.Editor
 				m_charClass = null;
 			}
 
-			m_classInfoDrawer.Source = charClass;
+			m_classInfoEditorComponent.Source = charClass;
 			foreach (var cp in m_components.Values)
 			{
-				//cp.CharacterClass = charClass;
+				cp.Source = charClass;
 			}
 
 			m_charClass = charClass;
@@ -95,7 +95,7 @@ namespace RPGCore.Character.Editor
 			else
 			{
 				GUILayout.BeginVertical();
-				m_classInfoDrawer.Draw();
+				m_classInfoEditorComponent.Draw();
 				DrawOptions();
 				GUILayout.EndVertical();
 			}

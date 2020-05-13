@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	internal class StatModifierDrawer : BodyDrawer<ItemDefinition>
+	internal class StatModifierEditorComponent : EditorComponent<ItemDefinition>
 	{
-		public StatModifierDrawer() { }
+		public StatModifierEditorComponent() { }
 
 		public override void Draw()
 		{

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	internal class ItemInfoDrawer : BodyDrawer<ItemDefinition>
+	internal class ItemInfoEditorComponent : EditorComponent<ItemDefinition>
 	{
 		public override void Draw()
 		{

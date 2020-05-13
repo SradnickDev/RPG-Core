@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
-using RPGCore.Character.Editor;
 using RPGCore.Database.Item;
 using RPGCore.Editor;
 using UnityEditor;

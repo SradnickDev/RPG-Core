@@ -1,5 +1,4 @@
-﻿using RPGCore.Character.Editor;
-using RPGCore.Editor;
+﻿using RPGCore.Editor;
 using RPGCore.Utilities;
 using UnityEngine;
 
