@@ -4,14 +4,15 @@ using UnityEngine;
 
 namespace RPGCore.Items.Editor
 {
-	public class ItemLabelEditor : ListLabel
+	public class ItemEntryEditor : ListEntry
 	{
 		public string ItemName => m_itemDefinition.DisplayName;
 		public ItemDefinition ItemDefinition => m_itemDefinition;
 
 		private ItemDefinition m_itemDefinition;
 
-		public ItemLabelEditor(ItemDefinition itemDefinition) : base()
+		
+		public ItemEntryEditor(ItemDefinition itemDefinition)
 		{
 			Set(itemDefinition);
 		}
@@ -19,25 +20,25 @@ namespace RPGCore.Items.Editor
 		public void Set(ItemDefinition itemDefinition)
 		{
 			m_itemDefinition = itemDefinition;
+		}
 
-			Set(m_itemDefinition.DisplayName
-			  , m_itemDefinition.ReadableType()
-			  , m_itemDefinition.Icon.Data?.texture
-			  , m_itemDefinition.ItemColor());
+		private void UpdateLabelInformation()
+		{
+			DrawLabel(m_itemDefinition.DisplayName
+					, m_itemDefinition.ReadableType()
+					, m_itemDefinition.Icon.Data?.texture
+					, m_itemDefinition.ItemColor());
 		}
 
 		public override void Draw()
 		{
 			if (m_itemDefinition == null)
 			{
-				Debug.LogError("Item Editor entry, ItemTemplate is null!");
+				Debug.LogError("ItemDefinition entry, ItemDefinition is null!");
 				return;
 			}
 
 			UpdateLabelInformation();
-			base.Draw();
 		}
-
-		private void UpdateLabelInformation() => Set(m_itemDefinition);
 	}
 }

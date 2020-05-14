@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace RPGCore.Character.Editor
 {
-	internal class ClassLabel : ListLabel
+	internal class ClassListEntry : ListEntry
 	{
 		public string ClassName => Source.GetType().Name;
 		public CharacterClass Source;
 
-		public ClassLabel(CharacterClass characterSource) : base()
+		public ClassListEntry(CharacterClass characterSource)
 		{
 			Set(characterSource);
 		}
@@ -16,24 +16,25 @@ namespace RPGCore.Character.Editor
 		public void Set(CharacterClass characterClass)
 		{
 			Source = characterClass;
-			Set(ClassName
-			  , ""
-			  , Source.Icon?.texture
-			  , Color.black);
+		}
+
+		private void UpdateLabelInformation()
+		{
+			DrawLabel(ClassName
+					, ""
+					, Source.Icon?.texture
+					, Color.black);
 		}
 
 		public override void Draw()
 		{
 			if (Source == null)
 			{
-				Debug.LogError("Class label , CharacterClass is null!");
+				Debug.LogError("CharacterClass Entry , CharacterClass is null!");
 				return;
 			}
 
 			UpdateLabelInformation();
-			base.Draw();
 		}
-		
-		private void UpdateLabelInformation() => Set(Source);
 	}
 }

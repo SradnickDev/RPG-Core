@@ -11,14 +11,14 @@ namespace RPGCore.Items.Editor
 {
 	internal class ItemListEditor : ResizeableEditor
 	{
-		public event Action<ItemLabelEditor> SelectionChanged;
+		public event Action<ItemEntryEditor> SelectionChanged;
 
 		public IEnumerable<ItemDefinition> Items =>
 			m_items.Select(item => item.ItemDefinition).ToList();
 
 		public int ItemCount => m_items.Count;
-		public ItemLabelEditor Selected;
-		private List<ItemLabelEditor> m_items;
+		public ItemEntryEditor Selected;
+		private List<ItemEntryEditor> m_items;
 		private Vector2 m_scrollPosition;
 		private int m_maxItemsPerPage = 60;
 		private readonly int[] m_visibleEntries = {10, 20, 40, 60, 80, 100};
@@ -56,14 +56,14 @@ namespace RPGCore.Items.Editor
 
 		public ItemListEditor()
 		{
-			m_items = new List<ItemLabelEditor>();
+			m_items = new List<ItemEntryEditor>();
 			m_scrollPosition = new Vector2(0, 0);
 			m_event = Event.current;
 		}
 
 		public void Add(ItemDefinition itemDefinition)
 		{
-			var newLabel = new ItemLabelEditor(itemDefinition);
+			var newLabel = new ItemEntryEditor(itemDefinition);
 			newLabel.OnEnable();
 			m_items.Add(newLabel);
 		}
@@ -72,13 +72,13 @@ namespace RPGCore.Items.Editor
 		{
 			foreach (var template in itemTemplate)
 			{
-				m_items.Add(new ItemLabelEditor(template));
+				m_items.Add(new ItemEntryEditor(template));
 			}
 		}
 
 		public void Reset()
 		{
-			m_items = new List<ItemLabelEditor>();
+			m_items = new List<ItemEntryEditor>();
 		}
 
 		public override void Draw()
@@ -162,7 +162,7 @@ namespace RPGCore.Items.Editor
 			HandleHorizontalResize();
 		}
 
-		private void UpdateSelection(ItemLabelEditor itemLabelEditor, EditorWindow window)
+		private void UpdateSelection(ItemEntryEditor itemEntryEditor, EditorWindow window)
 		{
 			var rect = GUILayoutUtility.GetLastRect();
 			var pos = Event.current.mousePosition;
@@ -170,19 +170,19 @@ namespace RPGCore.Items.Editor
 
 			if (LeftMousePressed && containsRect)
 			{
-				OnSelectionChanged(itemLabelEditor);
+				OnSelectionChanged(itemEntryEditor);
 			}
 
 			if (RightMousePressed && containsRect)
 			{
-				ContextMenu(itemLabelEditor);
+				ContextMenu(itemEntryEditor);
 			}
 		}
 
-		private void ContextMenu(ItemLabelEditor itemLabelEditor)
+		private void ContextMenu(ItemEntryEditor itemEntryEditor)
 		{
 			GUI.FocusControl(null);
-			var targetLabel = itemLabelEditor;
+			var targetLabel = itemEntryEditor;
 
 			void Save() => ItemDatabase.Update(targetLabel.ItemDefinition);
 
@@ -211,7 +211,7 @@ namespace RPGCore.Items.Editor
 												 targetLabel.ItemDefinition);
 					copy.Id = ObjectId.GenerateNewId();
 					copy.DisplayName = "copy_" + copy.DisplayName;
-					var newLabel = new ItemLabelEditor(copy);
+					var newLabel = new ItemEntryEditor(copy);
 					m_items.Add(newLabel);
 
 					OnSelectionChanged(newLabel);
@@ -230,7 +230,7 @@ namespace RPGCore.Items.Editor
 			m_event.Use();
 		}
 
-		private void OnSelectionChanged(ItemLabelEditor newSelection)
+		private void OnSelectionChanged(ItemEntryEditor newSelection)
 		{
 			if (newSelection != Selected)
 			{

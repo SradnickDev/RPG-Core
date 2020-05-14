@@ -8,9 +8,9 @@ namespace RPGCore.Character.Editor
 {
 	internal class ClassListEditor : ResizeableEditor
 	{
-		public event Action<ClassLabel> SelectionChanged;
-		public ClassLabel Selected;
-		private List<ClassLabel> m_class;
+		public event Action<ClassListEntry> SelectionChanged;
+		public ClassListEntry Selected;
+		private List<ClassListEntry> m_class;
 		private Vector2 m_scrollPosition;
 		private Event m_event;
 
@@ -42,14 +42,14 @@ namespace RPGCore.Character.Editor
 
 		public ClassListEditor()
 		{
-			m_class = new List<ClassLabel>();
+			m_class = new List<ClassListEntry>();
 			m_scrollPosition = new Vector2(0, 0);
 			m_event = Event.current;
 		}
 
 		public void Add(CharacterClass charClass)
 		{
-			var newLabel = new ClassLabel(charClass);
+			var newLabel = new ClassListEntry(charClass);
 			newLabel.OnEnable();
 			m_class.Add(newLabel);
 		}
@@ -84,7 +84,7 @@ namespace RPGCore.Character.Editor
 			GUILayout.EndScrollView();
 		}
 
-		private void UpdateSelection(ClassLabel label, EditorWindow window)
+		private void UpdateSelection(ClassListEntry listEntry, EditorWindow window)
 		{
 			var rect = GUILayoutUtility.GetLastRect();
 			var pos = Event.current.mousePosition;
@@ -92,11 +92,11 @@ namespace RPGCore.Character.Editor
 
 			if (LeftMousePressed && containsRect)
 			{
-				OnSelectionChanged(label);
+				OnSelectionChanged(listEntry);
 			}
 		}
 
-		private void OnSelectionChanged(ClassLabel newSelection)
+		private void OnSelectionChanged(ClassListEntry newSelection)
 		{
 			if (newSelection != Selected)
 			{

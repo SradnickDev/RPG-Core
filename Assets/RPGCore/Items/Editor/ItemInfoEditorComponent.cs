@@ -16,13 +16,9 @@ namespace RPGCore.Items.Editor
 			GUILayout.BeginVertical(EditorStyles.helpBox, GUILayout.MaxWidth(450));
 
 			GUILayout.BeginHorizontal();
-			var labelStyle = new GUIStyle(GUI.skin.label);
-			labelStyle.alignment = TextAnchor.MiddleLeft;
-			labelStyle.normal.textColor = Color.grey;
-			labelStyle.fontSize = 9;
 
-			GUILayout.Label($"{Source.ReadableType()}", labelStyle);
-			GUILayout.Label("Item ID :" + Source.Id, labelStyle);
+			GUILayout.Label($"{Source.ReadableType()}", RpgEditorStyles.LeftGreyMiniLabel);
+			GUILayout.Label("Item ID :" + Source.Id, RpgEditorStyles.LeftGreyMiniLabel);
 			GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();
 

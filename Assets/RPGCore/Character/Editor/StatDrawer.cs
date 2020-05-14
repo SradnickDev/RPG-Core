@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using RPGCore.Items.Editor;
 using RPGCore.Stat;
@@ -10,6 +11,7 @@ namespace RPGCore.Character.Editor
 {
 	internal class StatDrawer : EditorComponent<BaseStat>
 	{
+		public string ClassName;
 		private GUIStyle m_editorStyle;
 		private Color m_color = new Color(0.25f, 0.54f, 1f);
 
@@ -19,8 +21,8 @@ namespace RPGCore.Character.Editor
 		{
 			if (Source == null) return;
 
-			m_editorStyle = new GUIStyle();
-			m_editorStyle.normal.background = new Texture2D(1, 1);
+			m_editorStyle = new GUIStyle()
+				.NormalBackground(new Texture2D(1, 1));
 
 			GUILayout.BeginVertical(EditorStyles.helpBox);
 			DrawOptions();
@@ -47,9 +49,48 @@ namespace RPGCore.Character.Editor
 			{
 				var menu = new GenericMenu();
 
-				menu.AddItem(new GUIContent("Parse CSV"), false, () => { });
+				menu.AddItem(new GUIContent("Import CSV"), false, () =>
+				{
+					var path = EditorUtility.OpenFilePanel("Overwrite with CSV", "", "csv");
 
-				menu.AddItem(new GUIContent("Save as CSV"), false, () => { });
+					Source.Growth.CachedValues = new List<float>();
+
+					foreach (var line in File.ReadLines(path))
+					{
+						if (float.TryParse(line, out var result))
+						{
+							Source.Growth.CachedValues.Add(result);
+						}
+					}
+
+					Source.Growth.MaxLevel = Source.Growth.CachedValues.Count;
+					Source.Growth.MinValue = Source.Growth.CachedValues.Min();
+					Source.Growth.MaxValue = Source.Growth.CachedValues.Max();
+				});
+
+				menu.AddItem(new GUIContent("Export CSV"), false, () =>
+				{
+					var path = EditorUtility
+						.SaveFilePanel(
+									   "Save as CSV",
+									   "",
+									   $"{ClassName}_{Source.GetType().Name}_growth.csv",
+									   "csv");
+
+					if (path.Length != 0)
+					{
+						var content = new string[Source.Growth.CachedValues.Count];
+
+						for (var i = 0; i < Source.Growth.CachedValues.Count; i++)
+						{
+							content[i] = Source
+										 .Growth.CachedValues[i]
+										 .ToString();
+						}
+
+						File.WriteAllLines(path, content);
+					}
+				});
 
 				menu.AddItem(new GUIContent("Reset"), false, () =>
 				{
@@ -127,7 +168,9 @@ namespace RPGCore.Character.Editor
 						GUI.color += new Color(0, 0, 0, 1);
 					}
 
-					var style = new GUIStyle() {fontStyle = FontStyle.Bold, fontSize = 6};
+					var style = new GUIStyle()
+								.FontStyle(FontStyle.Bold)
+								.FontSize(6);
 
 					GUI.Label(new Rect(bar.x, bar.y - 14, 5, 30), growth.CachedValues[i] + "",
 							  style);
@@ -144,19 +187,19 @@ namespace RPGCore.Character.Editor
 
 			rect.y += 2;
 			rect.x += 10;
-			var titleStyle = new GUIStyle()
-			{
-				fontStyle = FontStyle.Bold, richText = true, alignment = TextAnchor.UpperLeft,
-				fontSize = 12
-			};
 
 			if (selection >= 0)
-				GUI.Label(rect, "Range: <color=white>" + (selection + 1) + "</color>", titleStyle);
+			{
+				GUI.Label(rect, $"Level: {(selection + 1)}", RpgEditorStyles.TitleStyle);
+			}
+
 			rect.y += 12;
+
 			if (selection >= 0)
+			{
 				GUI.Label(rect,
-						  "Value: <color=white>" + growth.CachedValues[selection] + "</color>",
-						  titleStyle);
+						  $"Amount: {growth.CachedValues[selection]}", RpgEditorStyles.TitleStyle);
+			}
 
 
 			GUI.color = Color.white;
@@ -247,7 +290,7 @@ namespace RPGCore.Character.Editor
 			GUILayout.Space(5);
 
 			GUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField("Value Range", GUILayout.Width(80));
+			EditorGUILayout.LabelField("Amount Range", GUILayout.Width(90));
 			growth.MinValue =
 				EditorGUILayout.FloatField(growth.MinValue, GUILayout.Width(50));
 			growth.MaxValue =

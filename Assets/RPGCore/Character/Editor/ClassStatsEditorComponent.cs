@@ -34,14 +34,32 @@ namespace RPGCore.Character.Editor
 			m_scrollPosition = EditorGUILayout.BeginScrollView(m_scrollPosition, false, false);
 			GUILayout.Space(20);
 			GUILayout.BeginVertical();
-			m_statDrawer.Draw();
-			m_statDrawer.Draw();
-			m_statDrawer.Draw();
-			m_statDrawer.Draw();
-			m_statDrawer.Draw();
-			m_statDrawer.Draw();
+
+			foreach (var stat in m_stats)
+			{
+				m_statDrawer.ClassName = Source.GetType().Name;
+				m_statDrawer.Source = stat;
+				m_statDrawer.Draw();
+			}
+
 			EditorGUILayout.EndScrollView();
-			GUILayout.Space(20);
+			GUILayout.EndHorizontal();
+			GUILayout.BeginHorizontal(EditorStyles.toolbar,
+									  GUILayout.ExpandWidth(true),
+									  GUILayout.MaxHeight(22));
+
+
+			var addIcon = EditorGUIUtility.IconContent("Toolbar Plus More");
+			EditorExtension.ClassDropDown<BaseStat>(new GUIContent(addIcon)
+												  , t => { m_stats?.Add(t); },
+													EditorStyles.toolbarButton);
+
+			if (GUILayout.Button(EditorGUIUtility.IconContent("TreeEditor.Trash"),
+								 EditorStyles.toolbarButton))
+			{
+				m_stats.Clear();
+			}
+
 			GUILayout.EndHorizontal();
 		}
 	}
