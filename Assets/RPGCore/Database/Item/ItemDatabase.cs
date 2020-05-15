@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using RPGCore.Items;
@@ -33,8 +34,8 @@ namespace RPGCore.Database.Item
 						 .Filter
 						 .Eq(nameof(ItemDefinition.DisplayName), name);
 
-			var itemTemplates = m_mongoDatabase.Fetch(filter);
-			return itemTemplates;
+			var itemDefinitions = m_mongoDatabase.Fetch(filter);
+			return itemDefinitions;
 		}
 
 		public static ItemDefinition Fetch(ObjectId id)
@@ -43,17 +44,26 @@ namespace RPGCore.Database.Item
 						 .Filter
 						 .Eq(nameof(ItemDefinition.Id), id);
 
-			var itemTemplates = m_mongoDatabase.Fetch(filter);
-			return itemTemplates;
+			var itemDefinitions = m_mongoDatabase.Fetch(filter);
+			return itemDefinitions;
 		}
 
 		public static IEnumerable<ItemDefinition> FetchAll()
 		{
-			var itemTemplates = m_mongoDatabase.FetchAll();
-			return itemTemplates;
+			var itemDefinitions = m_mongoDatabase.FetchAll();
+			return itemDefinitions;
 		}
 
-		public static async void FetchAllASync(Action<int,int> progress, Action<IEnumerable<ItemDefinition>> result,CancellationToken token = default)
+		public static void FetchAllASync(Action<int, int> progress,
+										 Action<IEnumerable<ItemDefinition>> result,
+										 CancellationToken token = default)
+		{
+			_ = FetchAllASyncInternal(progress, result, token);
+		}
+
+		private static async Task FetchAllASyncInternal(Action<int, int> progress,
+														Action<IEnumerable<ItemDefinition>> result,
+														CancellationToken token = default)
 		{
 			try
 			{
@@ -63,7 +73,6 @@ namespace RPGCore.Database.Item
 			{
 				Debug.LogError("Fetching Items was cancelled.");
 			}
-			
 		}
 
 		public static void Update(IEnumerable<ItemDefinition> items)
@@ -85,7 +94,7 @@ namespace RPGCore.Database.Item
 		{
 			return new
 				ReplaceOneModel<ItemDefinition>(new ExpressionFilterDefinition<ItemDefinition>(doc => doc.Id == item.Id),
-											  item)
+												item)
 				{
 					IsUpsert = true
 				};

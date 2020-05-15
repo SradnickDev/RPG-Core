@@ -212,7 +212,11 @@ namespace RPGCore.Character.Editor
 				switch (Event.current.rawType)
 				{
 					case EventType.MouseDrag:
-						if (selection >= 0) growth.CachedValues[selection] = value;
+						if (selection >= 0)
+						{
+							growth.CachedValues[selection] = value;
+						}
+
 						Window.Repaint();
 						break;
 				}

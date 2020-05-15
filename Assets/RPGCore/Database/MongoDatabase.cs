@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using RPGCore.Database.Mongo;
-using UnityEditor;
-using UnityEngine;
 
 namespace RPGCore.Database
 {
